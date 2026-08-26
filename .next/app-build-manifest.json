@@ -21,30 +21,15 @@
       "static/chunks/main-app.js",
       "static/chunks/app/_not-found/page.js"
     ],
-    "/(public)/events/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(public)/events/page.js"
-    ],
     "/(public)/chapters/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/(public)/chapters/page.js"
     ],
-    "/(public)/membership/page": [
+    "/(public)/chapters/[code]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/(public)/membership/page.js"
-    ],
-    "/(public)/contests/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(public)/contests/page.js"
-    ],
-    "/(dashboard)/student/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/(dashboard)/student/page.js"
+      "static/chunks/app/(public)/chapters/[code]/page.js"
     ]
   }
 }

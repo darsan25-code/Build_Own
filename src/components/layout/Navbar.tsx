@@ -41,17 +41,17 @@ export function Navbar() {
   ];
 
   return (
-    <header className="bg-white/95 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-50 transition-all">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 sm:h-18 gap-3 sm:gap-5 lg:gap-6">
+    <header className="bg-white/95 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-50 transition-all w-full">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 w-full">
+        <div className="flex items-center justify-between h-15 sm:h-16 lg:h-18 gap-2 sm:gap-4 lg:gap-6 w-full">
           {/* Left Branding Group: ACM Logo + Divider + Vel Tech Branding + Divider */}
-          <div className="flex items-center gap-3 sm:gap-4 lg:gap-5 flex-shrink-0">
+          <div className="flex items-center gap-2 sm:gap-4 lg:gap-5 min-w-0 flex-shrink">
             <BrandLogos variant="navbar" />
             <div className="h-7 w-px bg-slate-200 hidden lg:block flex-shrink-0" />
           </div>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-3.5 xl:gap-5 text-xs xl:text-sm font-medium text-slate-700 select-none flex-1 justify-start">
+          {/* Tablet & Desktop Navigation Links (Visible on md: 768px+) */}
+          <nav className="hidden md:flex items-center gap-2.5 lg:gap-3.5 xl:gap-5 text-xs xl:text-sm font-medium text-slate-700 select-none flex-1 justify-center lg:justify-start lg:pl-2">
             {navLinks.map((item) => {
               const isActive = item.exact
                 ? pathname === item.href
@@ -78,17 +78,17 @@ export function Navbar() {
             })}
           </nav>
 
-          {/* Actions & Search */}
+          {/* Actions & Search Group */}
           <div className="flex items-center gap-1.5 sm:gap-2 lg:gap-3 flex-shrink-0">
             <button
               aria-label="Search platform"
-              className="p-2 text-slate-500 hover:text-[#005596] rounded-xl hover:bg-slate-100/80 transition-colors flex-shrink-0"
+              className="p-1.5 sm:p-2 text-slate-500 hover:text-[#005596] rounded-xl hover:bg-slate-100/80 transition-colors flex-shrink-0"
             >
               <Search className="w-4 h-4" />
             </button>
 
             {sessionUser ? (
-              <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
+              <div className="flex items-center bg-blue-50/80 border border-blue-100/90 rounded-xl p-0.5 flex-shrink-0 shadow-sm">
                 <Link
                   href={
                     sessionUser.role === 'PLATFORM_ADMIN'
@@ -97,17 +97,20 @@ export function Navbar() {
                       ? '/chapter-admin'
                       : '/student'
                   }
-                  className="flex items-center gap-1.5 px-2.5 sm:px-3.5 py-1.5 sm:py-2 bg-blue-50 hover:bg-blue-100/80 text-[#005596] border border-blue-100 rounded-xl text-xs sm:text-sm font-semibold transition-all shadow-sm flex-shrink-0"
+                  className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 text-[#005596] hover:bg-blue-100/70 rounded-lg text-xs sm:text-sm font-semibold transition-all"
                   title="Dashboard"
                 >
                   <LayoutDashboard className="w-4 h-4 text-[#005596] flex-shrink-0" />
-                  <span className="hidden md:inline">Dashboard</span>
+                  <span className="hidden lg:inline">Dashboard</span>
                 </Link>
+
+                <div className="w-px h-4 bg-blue-200/80 flex-shrink-0 my-auto" />
 
                 <button
                   onClick={handleLogout}
-                  className="p-1.5 sm:p-2 text-slate-400 hover:text-red-600 rounded-xl hover:bg-red-50 transition-colors flex-shrink-0"
+                  className="p-1.5 text-slate-400 hover:text-red-600 rounded-lg hover:bg-red-50 transition-colors flex-shrink-0"
                   title="Sign Out"
+                  aria-label="Sign Out"
                 >
                   <LogOut className="w-4 h-4" />
                 </button>
@@ -129,10 +132,10 @@ export function Navbar() {
               </div>
             )}
 
-            {/* Mobile Hamburger Toggle Button */}
+            {/* Mobile Hamburger Toggle Button (Hidden on md: 768px+ where nav is visible) */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 sm:p-2.5 lg:hidden text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-colors min-h-[40px] min-w-[40px] flex items-center justify-center flex-shrink-0"
+              className="p-2 sm:p-2.5 md:hidden text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-colors min-h-[40px] min-w-[40px] flex items-center justify-center flex-shrink-0"
               aria-label="Toggle menu"
               aria-expanded={mobileMenuOpen}
             >
@@ -142,11 +145,11 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobile Drawer Menu (Visible on < md: 768px) */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-slate-200 bg-white/95 backdrop-blur-md px-4 pt-3 pb-6 space-y-2 animate-fade-in shadow-xl">
+        <div className="md:hidden border-t border-slate-200 bg-white/95 backdrop-blur-md px-4 pt-3 pb-6 space-y-2 animate-fade-in shadow-xl">
           {sessionUser && (
-            <div className="pb-2 border-b border-slate-100 mb-2">
+            <div className="pb-3 border-b border-slate-100 mb-2 flex items-center justify-between gap-2">
               <Link
                 href={
                   sessionUser.role === 'PLATFORM_ADMIN'
@@ -155,11 +158,19 @@ export function Navbar() {
                     ? '/chapter-admin'
                     : '/student'
                 }
-                className="flex items-center gap-2 px-3.5 py-2.5 bg-blue-50 text-[#005596] border border-blue-100 rounded-xl text-sm font-bold shadow-sm"
+                className="flex-1 flex items-center gap-2 px-3.5 py-2.5 bg-blue-50 text-[#005596] border border-blue-100 rounded-xl text-sm font-bold shadow-sm"
               >
                 <LayoutDashboard className="w-4 h-4 text-[#005596]" />
                 <span>Dashboard</span>
               </Link>
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-1.5 px-3.5 py-2.5 bg-red-50 text-red-600 border border-red-100 rounded-xl text-sm font-semibold hover:bg-red-100 transition-colors"
+                title="Sign Out"
+              >
+                <LogOut className="w-4 h-4" />
+                <span>Sign Out</span>
+              </button>
             </div>
           )}
 
