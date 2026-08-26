@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 180" fill="none">
+  <!-- Circular Emblem -->
+  <g transform="translate(10, 10)">
+    <!-- Outer Rings -->
+    <circle cx="75" cy="75" r="72" fill="#003566" stroke="#DAA520" stroke-width="4"/>
+    <circle cx="75" cy="75" r="62" fill="#002147" stroke="#ffffff" stroke-width="1.5"/>
+    
+    <!-- Outer Text curved/radial simulation -->
+    <text x="75" y="24" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="1.5">★ VEL TECH ★</text>
+    <text x="75" y="142" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="9.5" font-weight="800" fill="#ffffff" text-anchor="middle" letter-spacing="0.5">THE VIRTUES</text>
+    
+    <!-- Inner Multi-faith Emblem Base -->
+    <circle cx="75" cy="75" r="46" fill="#ffffff" stroke="#003566" stroke-width="2"/>
+    
+    <!-- Central Tower/Monument icon -->
+    <circle cx="75" cy="75" r="18" fill="#002147"/>
+    <polygon points="75,60 70,86 80,86" fill="#DAA520"/>
+    <rect x="73" y="70" width="4" height="15" fill="#ffffff"/>
+    <text x="75" y="80" font-family="sans-serif" font-size="5" font-weight="bold" fill="#ffffff" text-anchor="middle">VEL</text>
+    
+    <!-- 5 Surrounding Faith Emblems -->
+    <!-- Om Top -->
+    <circle cx="75" cy="42" r="10" fill="#ffffff" stroke="#c0392b" stroke-width="1"/>
+    <text x="75" y="46" font-family="sans-serif" font-size="10" font-weight="bold" fill="#c0392b" text-anchor="middle">ॐ</text>
+    
+    <!-- Cross Left -->
+    <circle cx="45" cy="65" r="10" fill="#ffffff" stroke="#2980b9" stroke-width="1"/>
+    <text x="45" y="70" font-family="sans-serif" font-size="11" font-weight="bold" fill="#2980b9" text-anchor="middle">✝</text>
+    
+    <!-- Wheel/Dharma Right -->
+    <circle cx="105" cy="65" r="10" fill="#ffffff" stroke="#8e44ad" stroke-width="1"/>
+    <text x="105" y="69" font-family="sans-serif" font-size="10" font-weight="bold" fill="#8e44ad" text-anchor="middle">☸</text>
+    
+    <!-- Crescent Bottom-Left -->
+    <circle cx="53" cy="98" r="10" fill="#ffffff" stroke="#27ae60" stroke-width="1"/>
+    <text x="53" y="102" font-family="sans-serif" font-size="10" font-weight="bold" fill="#27ae60" text-anchor="middle">☪</text>
+    
+    <!-- Torch/Flame Bottom-Right -->
+    <circle cx="97" cy="98" r="10" fill="#ffffff" stroke="#d35400" stroke-width="1"/>
+    <polygon points="97,91 94,103 100,103" fill="#e67e22"/>
+    <circle cx="97" cy="91" r="3" fill="#f39c12"/>
+  </g>
+
+  <!-- Typography -->
+  <g transform="translate(170, 20)">
+    <text x="0" y="36" font-family="'Times New Roman', Times, serif, -apple-system" font-size="42" font-weight="900" fill="#0F172A" letter-spacing="-0.5">Vel Tech</text>
+    <text x="0" y="76" font-family="'Times New Roman', Times, serif, -apple-system" font-size="42" font-weight="900" fill="#005596" letter-spacing="-0.5">High Tech</text>
+    
+    <text x="0" y="102" font-family="'Times New Roman', Times, serif, -apple-system" font-size="14.5" font-weight="700" fill="#0F172A" letter-spacing="0.2">Dr.Rangarajan Dr.Sakunthala</text>
+    <text x="0" y="122" font-family="'Times New Roman', Times, serif, -apple-system" font-size="16" font-weight="800" fill="#005596" letter-spacing="0.3">Engineering College</text>
+    
+    <!-- Affiliation Banner -->
+    <rect x="0" y="132" width="340" height="20" rx="3" fill="#002147"/>
+    <text x="170" y="146" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="10.5" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="0.3">Autonomous - Affiliated to Anna University</text>
+    
+    <!-- Location -->
+    <text x="170" y="166" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="11" font-weight="800" fill="#0F172A" text-anchor="middle" letter-spacing="0.5">Avadi, Chennai</text>
+  </g>
+</svg>

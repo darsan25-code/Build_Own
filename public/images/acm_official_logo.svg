@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 120" fill="none">
+  <g transform="translate(10, 10)">
+    <!-- Tilted Diamond Base -->
+    <g transform="translate(50, 50) rotate(45)">
+      <!-- Top Cyan Gradient Corner -->
+      <path d="M-36,-36 L36,-36 L36,36 L-36,36 Z" rx="6" fill="url(#acm_diamond_grad)"/>
+    </g>
+
+    <!-- Gradient definition for the two-tone diamond -->
+    <defs>
+      <linearGradient id="acm_diamond_grad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#5CC5EF"/>
+        <stop offset="50%" stop-color="#0092D0"/>
+        <stop offset="100%" stop-color="#006DA7"/>
+      </linearGradient>
+      <linearGradient id="acm_inner_circle" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#0096D6"/>
+        <stop offset="100%" stop-color="#0072BA"/>
+      </linearGradient>
+    </defs>
+
+    <!-- White Circle Ring -->
+    <circle cx="50" cy="50" r="32" fill="url(#acm_inner_circle)" stroke="#ffffff" stroke-width="4.5"/>
+
+    <!-- "acm" Lowercase Bold Typography inside circle -->
+    <text x="50" y="58" font-family="'Helvetica Neue', Arial, sans-serif" font-size="25" font-weight="900" fill="#ffffff" text-anchor="middle" letter-spacing="-1">acm</text>
+  </g>
+
+  <!-- Typography: Association for Computing Machinery -->
+  <g transform="translate(125, 20)">
+    <text x="0" y="34" font-family="'Helvetica Neue', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="25" font-weight="800" fill="#1E293B" letter-spacing="-0.3">
+      Association for
+    </text>
+    <text x="0" y="65" font-family="'Helvetica Neue', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="25" font-weight="800" fill="#1E293B" letter-spacing="-0.3">
+      Computing Machinery
+    </text>
+  </g>
+</svg>

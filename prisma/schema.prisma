@@ -1,0 +1,515 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Institution {
+  id        String   @id @default(uuid())
+  name      String
+  code      String   @unique
+  domain    String?  @unique
+  location  String
+  country   String   @default("USA")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  users    User[]
+  chapters Chapter[]
+  events   Event[]
+}
+
+model User {
+  id             String    @id @default(uuid())
+  email          String    @unique
+  passwordHash   String
+  name           String
+  role           String    @default("STUDENT") // PUBLIC_USER, STUDENT, CHAPTER_MEMBER, CHAPTER_OFFICER, CHAPTER_ADMIN, FACULTY_COORDINATOR, PLATFORM_ADMIN
+  accountType    String    @default("Student")
+  isVerified     Boolean   @default(false)
+  mfaEnabled     Boolean   @default(false)
+  mfaSecret      String?
+  failedAttempts Int       @default(0)
+  lockedUntil    DateTime?
+  avatarUrl      String?
+  studentId      String?
+  department     String?
+  yearOfStudy    String?
+  
+  institutionId  String?
+  institution    Institution? @relation(fields: [institutionId], references: [id], onDelete: SetNull)
+
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  deletedAt      DateTime?
+
+  memberships    ChapterMembership[]
+  officerRoles   ChapterOfficer[]
+  registrations  EventRegistration[]
+  organizerRoles EventOrganizer[]
+  certificates   Certificate[]
+  auditLogs      AuditLog[]           @relation("ActorAuditLogs")
+  notifications  Notification[]
+  resources      Resource[]
+  publications   Publication[]
+  announcements  Announcement[]
+  fileAssets     FileAsset[]
+  ledTeams       EventTeam[]          @relation("TeamLeader")
+  teamMemberships EventParticipant[]
+  contestParticipations ContestParticipant[]
+  contestSubmissions    Submission[]
+  createdContests       Contest[]            @relation("ContestCreator")
+  createdProblems       Problem[]            @relation("ProblemAuthor")
+}
+
+model Chapter {
+  id            String   @id @default(uuid())
+  name          String
+  code          String   @unique
+  type          String   @default("Student")
+  status        String   @default("PENDING") // PENDING, APPROVED, REJECTED, SUSPENDED
+  description   String
+  bannerUrl     String?
+  logoUrl       String?
+  foundedYear   Int      @default(2024)
+  
+  institutionId String
+  institution   Institution @relation(fields: [institutionId], references: [id], onDelete: Cascade)
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  memberships   ChapterMembership[]
+  officers      ChapterOfficer[]
+  events        Event[]
+  resources     Resource[]
+  publications  Publication[]
+  announcements Announcement[]
+  contests      Contest[]
+}
+
+model ChapterMembership {
+  id        String   @id @default(uuid())
+  chapterId String
+  userId    String
+  role      String   @default("CHAPTER_MEMBER")
+  status    String   @default("ACTIVE")
+  joinedAt  DateTime @default(now())
+  createdAt DateTime @default(now())
+
+  chapter   Chapter  @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([chapterId, userId])
+}
+
+model ChapterOfficer {
+  id        String   @id @default(uuid())
+  chapterId String
+  userId    String
+  position  String
+  title     String
+  termStart DateTime @default(now())
+  termEnd   DateTime?
+  active    Boolean  @default(true)
+
+  chapter   Chapter  @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([chapterId, userId, position])
+}
+
+model Event {
+  id                   String      @id @default(uuid())
+  title                String
+  slug                 String      @unique
+  description          String
+  type                 String      @default("TECHNICAL_TALK") // TECHNICAL_TALK, WORKSHOP, HACKATHON, SYMPOSIUM, CONFERENCE, COMPETITION
+  format               String      @default("ONLINE") // IN_PERSON, ONLINE, HYBRID
+  status               String      @default("PUBLISHED") // DRAFT, PENDING_APPROVAL, PUBLISHED, CANCELLED, COMPLETED
+  visibility           String      @default("PUBLIC") // PUBLIC or PRIVATE
+  
+  maxCapacity          Int         @default(100)
+  currentRegistrations Int         @default(0)
+  isPaid               Boolean     @default(false)
+  price                Float       @default(0.0)
+  
+  startTime            DateTime
+  endTime              DateTime
+  registrationDeadline DateTime
+  location             String      @default("Online")
+  meetingUrl           String?
+  bannerUrl            String?
+  certificateEligible  Boolean     @default(true)
+
+  institutionId        String?
+  institution          Institution? @relation(fields: [institutionId], references: [id], onDelete: SetNull)
+
+  chapterId            String
+  chapter              Chapter      @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+
+  createdAt            DateTime     @default(now())
+  updatedAt            DateTime     @updatedAt
+
+  organizers           EventOrganizer[]
+  registrations        EventRegistration[]
+  teams                EventTeam[]
+  certificates         Certificate[]
+
+  @@index([slug])
+  @@index([startTime])
+  @@index([status])
+}
+
+model EventOrganizer {
+  id      String @id @default(uuid())
+  eventId String
+  userId  String
+  role    String @default("ORGANIZER")
+
+  event   Event  @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([eventId, userId])
+}
+
+model EventRegistration {
+  id               String             @id @default(uuid())
+  eventId          String
+  userId           String
+  teamId           String?
+  status           String             @default("CONFIRMED") // CONFIRMED, WAITLISTED, CANCELLED, ATTENDED
+  registrationCode String             @unique
+  attended         Boolean            @default(false)
+  registeredAt     DateTime           @default(now())
+
+  event            Event              @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  user             User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  team             EventTeam?         @relation(fields: [teamId], references: [id], onDelete: SetNull)
+
+  @@unique([eventId, userId])
+  @@index([eventId])
+  @@index([userId])
+}
+
+model EventTeam {
+  id         String   @id @default(uuid())
+  eventId    String
+  name       String
+  leaderId   String
+  inviteCode String   @unique
+  maxMembers Int      @default(4)
+  createdAt  DateTime @default(now())
+
+  event        Event              @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  leader       User               @relation("TeamLeader", fields: [leaderId], references: [id], onDelete: Cascade)
+  participants EventParticipant[]
+  registrations EventRegistration[]
+}
+
+model EventParticipant {
+  id       String    @id @default(uuid())
+  teamId   String
+  userId   String
+  role     String    @default("MEMBER")
+  joinedAt DateTime  @default(now())
+
+  team     EventTeam @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([teamId, userId])
+}
+
+model Resource {
+  id            String   @id @default(uuid())
+  title         String
+  category      String
+  type          String
+  url           String
+  description   String
+  isPublic      Boolean  @default(true)
+  downloadCount Int      @default(0)
+  createdAt     DateTime @default(now())
+
+  chapterId     String?
+  chapter       Chapter? @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+
+  authorId      String
+  author        User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+}
+
+model Publication {
+  id          String   @id @default(uuid())
+  title       String
+  type        String   @default("Journal")
+  abstract    String
+  pdfUrl      String?
+  externalUrl String?
+  doi         String?
+  publishedAt DateTime @default(now())
+
+  chapterId   String?
+  chapter     Chapter? @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+
+  authorId    String
+  author      User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+}
+
+model Certificate {
+  id              String   @id @default(uuid())
+  certificateCode String   @unique
+  userId          String
+  eventId         String
+  issuedAt        DateTime @default(now())
+  pdfAssetUrl     String
+  verifiedCount   Int      @default(0)
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, eventId])
+}
+
+model Announcement {
+  id        String   @id @default(uuid())
+  title     String
+  content   String
+  scope     String   @default("CHAPTER") // GLOBAL or CHAPTER
+  isPinned  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  chapterId String?
+  chapter   Chapter? @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  userId    String
+  title     String
+  message   String
+  type      String   @default("INFO")
+  link      String?
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model AuditLog {
+  id            String   @id @default(uuid())
+  actorId       String?
+  actorEmail    String?
+  action        String
+  resource      String
+  resourceId    String?
+  ipAddress     String?
+  userAgent     String?
+  correlationId String?
+  details       String?
+  createdAt     DateTime @default(now())
+
+  actor User? @relation("ActorAuditLogs", fields: [actorId], references: [id], onDelete: SetNull)
+}
+
+model FileAsset {
+  id           String   @id @default(uuid())
+  originalName String
+  mimeType     String
+  sizeBytes    Int
+  storageKey   String   @unique
+  publicUrl    String
+  category     String   @default("DOCUMENT")
+  createdAt    DateTime @default(now())
+
+  uploaderId   String
+  uploader     User     @relation(fields: [uploaderId], references: [id], onDelete: Cascade)
+}
+
+model ModerationAction {
+  id          String   @id @default(uuid())
+  targetType  String
+  targetId    String
+  action      String
+  reason      String
+  moderatorId String
+  createdAt   DateTime @default(now())
+}
+
+model Contest {
+  id                   String   @id @default(uuid())
+  title                String
+  slug                 String   @unique
+  description          String
+  rules                String?
+  bannerUrl            String?
+  status               String   @default("DRAFT") // DRAFT, UPCOMING, LIVE, ENDED, CANCELLED
+  startTime            DateTime
+  endTime              DateTime
+  registrationDeadline DateTime
+  durationMinutes      Int      @default(120)
+  prizePool            String?  @default("₹25,000 + ACM Official Certificates")
+  visibility           String   @default("PUBLIC") // PUBLIC, PRIVATE
+  maxParticipants      Int      @default(100)
+  scoring              String   @default("STANDARD") // STANDARD, BINARY
+  penaltyRules         Int      @default(20) // Penalty in minutes per wrong submission
+  
+  chapterId            String?
+  chapter              Chapter? @relation(fields: [chapterId], references: [id], onDelete: SetNull)
+
+  creatorId            String?
+  creator              User?    @relation("ContestCreator", fields: [creatorId], references: [id], onDelete: SetNull)
+
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  problems             Problem[]
+  participants         ContestParticipant[]
+  submissions          Submission[]
+  leaderboard          LeaderboardEntry[]
+  announcements        ContestAnnouncement[]
+  activityLogs         ContestActivityLog[]
+}
+
+model Problem {
+  id             String   @id @default(uuid())
+  contestId      String
+  title          String
+  slug           String
+  orderIndex     Int      @default(1)
+  difficulty     String   @default("MEDIUM") // EASY, MEDIUM, HARD
+  tags           String   @default("Algorithms") // comma-separated e.g. "Arrays, Dynamic Programming"
+  points         Int      @default(100)
+  statement      String
+  inputFormat    String?
+  outputFormat   String?
+  constraints    String?
+  timeLimitMs    Int      @default(2000)
+  memoryLimitMb  Int      @default(256)
+  starterCode    String   @default("{}") // JSON string of { python: "...", javascript: "...", cpp: "...", java: "..." }
+
+  authorId       String?
+  author         User?    @relation("ProblemAuthor", fields: [authorId], references: [id], onDelete: SetNull)
+
+  contest        Contest  @relation(fields: [contestId], references: [id], onDelete: Cascade)
+  testCases      ProblemTestCase[]
+  submissions    Submission[]
+
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@unique([contestId, slug])
+}
+
+model ProblemTestCase {
+  id             String   @id @default(uuid())
+  problemId      String
+  inputData      String
+  expectedOutput String
+  isHidden       Boolean  @default(false)
+  explanation    String?
+  weight         Int      @default(10)
+  orderIndex     Int      @default(1)
+
+  problem        Problem  @relation(fields: [problemId], references: [id], onDelete: Cascade)
+  testResults    SubmissionTestResult[]
+  createdAt      DateTime @default(now())
+}
+
+model ContestParticipant {
+  id           String    @id @default(uuid())
+  contestId    String
+  userId       String
+  registeredAt DateTime  @default(now())
+  status       String    @default("ACTIVE") // ACTIVE, DISQUALIFIED
+  startedAt    DateTime?
+  finishedAt   DateTime?
+
+  contest      Contest   @relation(fields: [contestId], references: [id], onDelete: Cascade)
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([contestId, userId])
+}
+
+model Submission {
+  id              String   @id @default(uuid())
+  contestId       String
+  problemId       String
+  userId          String
+  language        String   @default("javascript") // python, javascript, cpp, java
+  sourceCode      String
+  status          String   @default("QUEUED") // QUEUED, COMPILING, RUNNING, ACCEPTED, WRONG_ANSWER, etc.
+  score           Int      @default(0)
+  executionTimeMs Int      @default(0)
+  memoryUsedMb    Float    @default(0.0)
+  submittedAt     DateTime @default(now())
+  errorMessage    String?
+
+  contest         Contest  @relation(fields: [contestId], references: [id], onDelete: Cascade)
+  problem         Problem  @relation(fields: [problemId], references: [id], onDelete: Cascade)
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  testResults     SubmissionTestResult[]
+
+  @@index([contestId])
+  @@index([userId])
+  @@index([problemId])
+  @@index([submittedAt])
+}
+
+model SubmissionTestResult {
+  id              String   @id @default(uuid())
+  submissionId    String
+  testCaseId      String
+  status          String   @default("PENDING") // ACCEPTED, WRONG_ANSWER, TIME_LIMIT_EXCEEDED, RUNTIME_ERROR, etc.
+  executionTimeMs Int      @default(0)
+  memoryUsedMb    Float    @default(0.0)
+  score           Int      @default(0)
+
+  submission      Submission      @relation(fields: [submissionId], references: [id], onDelete: Cascade)
+  testCase        ProblemTestCase @relation(fields: [testCaseId], references: [id], onDelete: Cascade)
+}
+
+model LeaderboardEntry {
+  id               String   @id @default(uuid())
+  contestId        String
+  userId           String
+  userName         String
+  userEmail        String
+  institutionName  String?
+  rank             Int      @default(1)
+  score            Int      @default(0)
+  totalPenaltyTime Int      @default(0)
+  problemScores    String   @default("{}") // JSON string of problem scores & timestamps
+  updatedAt        DateTime @updatedAt
+
+  contest          Contest  @relation(fields: [contestId], references: [id], onDelete: Cascade)
+
+  @@unique([contestId, userId])
+}
+
+model ContestAnnouncement {
+  id        String   @id @default(uuid())
+  contestId String
+  title     String
+  content   String
+  createdAt DateTime @default(now())
+
+  contest   Contest  @relation(fields: [contestId], references: [id], onDelete: Cascade)
+}
+
+model ContestActivityLog {
+  id        String   @id @default(uuid())
+  contestId String
+  userId    String
+  type      String // TAB_BLUR, COPY_PASTE, MULTIPLE_DEVICES, RAPID_SUBMISSION
+  details   String
+  timestamp DateTime @default(now())
+
+  contest   Contest  @relation(fields: [contestId], references: [id], onDelete: Cascade)
+}
+

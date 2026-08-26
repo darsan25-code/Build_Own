@@ -1,0 +1,70 @@
+import Link from 'next/link';
+
+export function BrandLogos({ variant = 'navbar' }: { variant?: 'navbar' | 'hero' | 'footer' }) {
+  if (variant === 'footer') {
+    return (
+      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+        {/* ACM Official Brand — Full color official logo on clean background */}
+        <Link href="/" className="flex items-center gap-3 group transition-opacity hover:opacity-90">
+          <div className="h-10 px-2.5 py-1 bg-white rounded-xl shadow-sm flex items-center">
+            <img
+              src="/images/acm_official_logo.svg"
+              alt="Association for Computing Machinery"
+              className="h-8 w-auto object-contain"
+            />
+          </div>
+        </Link>
+
+        <div className="hidden sm:block w-px h-8 bg-slate-700" />
+
+        {/* Vel Tech High Tech Institution */}
+        <Link href="/" className="flex items-center gap-3 group transition-opacity hover:opacity-90">
+          <img
+            src="/images/veltech_seal.png"
+            alt="Vel Tech Seal"
+            className="w-10 h-10 object-contain rounded-full shadow-sm bg-white p-0.5"
+          />
+          <div>
+            <span className="font-extrabold text-white text-xs block leading-tight">Vel Tech High Tech</span>
+            <span className="text-[10.5px] text-slate-400 block leading-tight">Dr.Rangarajan Dr.Sakunthala Engg College</span>
+          </div>
+        </Link>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex items-center gap-2 sm:gap-3.5 lg:gap-5 py-1 flex-shrink-0">
+      {/* 1. ACM Official Diamond Logo */}
+      <Link href="/" className="flex items-center group transition-opacity hover:opacity-90 flex-shrink-0">
+        <img
+          src="/images/acm_official_logo.svg"
+          alt="Association for Computing Machinery"
+          className="h-9 sm:h-11 md:h-12 w-auto object-contain transition-transform duration-200 group-hover:scale-[1.02]"
+        />
+      </Link>
+
+      {/* 2. Sleek Vertical Divider */}
+      <div className="h-7 sm:h-8 w-px bg-slate-200/80 hidden sm:block flex-shrink-0" />
+
+      {/* 3. Vel Tech High Tech College Emblem & Typography */}
+      <Link href="/" className="flex items-center gap-2 sm:gap-3 group transition-opacity hover:opacity-90 flex-shrink-0">
+        <div className="w-8 h-8 sm:w-10 sm:h-10 flex-shrink-0 flex items-center justify-center">
+          <img
+            src="/images/veltech_seal.png"
+            alt="Vel Tech Official Seal"
+            className="w-full h-full object-contain rounded-full shadow-sm"
+          />
+        </div>
+        <div className="flex flex-col justify-center">
+          <span className="font-extrabold text-slate-900 text-[11px] sm:text-xs md:text-[13px] tracking-tight leading-tight whitespace-nowrap">
+            Vel Tech High Tech
+          </span>
+          <span className="font-bold text-[#005596] text-[9.5px] sm:text-[10px] md:text-[11px] tracking-tight leading-tight mt-0.5 whitespace-nowrap">
+            ACM Student Chapter
+          </span>
+        </div>
+      </Link>
+    </div>
+  );
+}
