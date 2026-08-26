@@ -45,13 +45,13 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 w-full">
         <div className="flex items-center justify-between h-15 sm:h-16 lg:h-18 gap-2 sm:gap-4 lg:gap-6 w-full">
           {/* Left Branding Group: ACM Logo + Divider + Vel Tech Branding + Divider */}
-          <div className="flex items-center gap-2 sm:gap-4 lg:gap-5 min-w-0 flex-shrink">
+          <div className="flex items-center gap-3 sm:gap-4 lg:gap-5 flex-shrink-0">
             <BrandLogos variant="navbar" />
             <div className="h-7 w-px bg-slate-200 hidden lg:block flex-shrink-0" />
           </div>
 
-          {/* Tablet & Desktop Navigation Links (Visible on md: 768px+) */}
-          <nav className="hidden md:flex items-center gap-2.5 lg:gap-3.5 xl:gap-5 text-xs xl:text-sm font-medium text-slate-700 select-none flex-1 justify-center lg:justify-start lg:pl-2">
+          {/* Desktop Navigation Links (Visible on lg: 1024px+) */}
+          <nav className="hidden lg:flex items-center gap-3 xl:gap-5 text-xs xl:text-sm font-medium text-slate-700 select-none flex-1 justify-start">
             {navLinks.map((item) => {
               const isActive = item.exact
                 ? pathname === item.href
@@ -132,10 +132,10 @@ export function Navbar() {
               </div>
             )}
 
-            {/* Mobile Hamburger Toggle Button (Hidden on md: 768px+ where nav is visible) */}
+            {/* Mobile Hamburger Toggle Button (Hidden on lg: 1024px+ where nav is visible) */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 sm:p-2.5 md:hidden text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-colors min-h-[40px] min-w-[40px] flex items-center justify-center flex-shrink-0"
+              className="p-2 sm:p-2.5 lg:hidden text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-colors min-h-[40px] min-w-[40px] flex items-center justify-center flex-shrink-0"
               aria-label="Toggle menu"
               aria-expanded={mobileMenuOpen}
             >
