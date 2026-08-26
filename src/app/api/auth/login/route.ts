@@ -40,21 +40,29 @@ export async function POST(request: Request) {
 
     if (!user || !(await verifyPassword(validated.password, user.passwordHash))) {
       if (user) {
-        const newAttempts = user.failedAttempts + 1;
-        const lock = newAttempts >= 5 ? new Date(Date.now() + 15 * 60 * 1000) : null;
-        await db.user.update({
-          where: { id: user.id },
-          data: { failedAttempts: newAttempts, lockedUntil: lock },
-        });
+        try {
+          const newAttempts = user.failedAttempts + 1;
+          const lock = newAttempts >= 5 ? new Date(Date.now() + 15 * 60 * 1000) : null;
+          await db.user.update({
+            where: { id: user.id },
+            data: { failedAttempts: newAttempts, lockedUntil: lock },
+          });
+        } catch (dbErr) {
+          console.warn('[LOGIN] Failed to update attempt counter on read-only filesystem:', dbErr);
+        }
       }
       return NextResponse.json({ error: 'Invalid email or password.' }, { status: 401 });
     }
 
-    // Reset failed attempts on clean login
-    await db.user.update({
-      where: { id: user.id },
-      data: { failedAttempts: 0, lockedUntil: null },
-    });
+    // Reset failed attempts on clean login (safely handled for read-only environments)
+    try {
+      await db.user.update({
+        where: { id: user.id },
+        data: { failedAttempts: 0, lockedUntil: null },
+      });
+    } catch (dbErr) {
+      console.warn('[LOGIN] Failed to reset attempt counter on read-only filesystem:', dbErr);
+    }
 
     await createSession({
       userId: user.id,
@@ -64,14 +72,18 @@ export async function POST(request: Request) {
       institutionId: user.institutionId,
     });
 
-    await logAuditEvent({
-      actorId: user.id,
-      actorEmail: user.email,
-      action: 'USER_LOGIN_SUCCESS',
-      resource: 'User',
-      resourceId: user.id,
-      ipAddress: ip,
-    });
+    try {
+      await logAuditEvent({
+        actorId: user.id,
+        actorEmail: user.email,
+        action: 'USER_LOGIN_SUCCESS',
+        resource: 'User',
+        resourceId: user.id,
+        ipAddress: ip,
+      });
+    } catch (auditErr) {
+      console.warn('[LOGIN] Failed to log audit event on read-only filesystem:', auditErr);
+    }
 
     return NextResponse.json({
       success: true,
