@@ -45,7 +45,7 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-3 sm:px-4 lg:px-8 w-full">
         <div className="flex items-center justify-between h-15 sm:h-16 lg:h-18 gap-2 sm:gap-4 lg:gap-6 w-full">
           {/* Left Branding Group: ACM Logo + Divider + Vel Tech Branding + Divider */}
-          <div className="flex items-center gap-3 sm:gap-4 lg:gap-5 flex-shrink-0">
+          <div className="flex items-center gap-2 sm:gap-4 lg:gap-5 min-w-0 flex-shrink sm:flex-shrink-0">
             <BrandLogos variant="navbar" />
             <div className="h-7 w-px bg-slate-200 hidden lg:block flex-shrink-0" />
           </div>
@@ -79,7 +79,7 @@ export function Navbar() {
           </nav>
 
           {/* Actions & Search Group */}
-          <div className="flex items-center gap-1.5 sm:gap-2 lg:gap-3 flex-shrink-0">
+          <div className="flex items-center gap-1 sm:gap-2 lg:gap-3 flex-shrink-0">
             <button
               aria-label="Search platform"
               className="p-1.5 sm:p-2 text-slate-500 hover:text-[#005596] rounded-xl hover:bg-slate-100/80 transition-colors flex-shrink-0"
@@ -97,7 +97,7 @@ export function Navbar() {
                       ? '/chapter-admin'
                       : '/student'
                   }
-                  className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 text-[#005596] hover:bg-blue-100/70 rounded-lg text-xs sm:text-sm font-semibold transition-all"
+                  className="flex items-center gap-1.5 px-2 sm:px-3 py-1.5 text-[#005596] hover:bg-blue-100/70 rounded-lg text-xs sm:text-sm font-semibold transition-all"
                   title="Dashboard"
                 >
                   <LayoutDashboard className="w-4 h-4 text-[#005596] flex-shrink-0" />
@@ -116,18 +116,19 @@ export function Navbar() {
                 </button>
               </div>
             ) : (
-              <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
+              <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
                 <Link
                   href="/login"
-                  className="px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold text-[#005596] hover:bg-[#005596]/10 rounded-xl transition-colors"
+                  className="px-2 sm:px-3.5 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold text-[#005596] hover:bg-[#005596]/10 rounded-xl transition-colors hidden sm:inline-flex"
                 >
                   Login
                 </Link>
                 <Link
                   href="/signup"
-                  className="px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-bold text-white bg-[#005596] hover:bg-[#003B6E] active:scale-[0.98] rounded-xl shadow-md hover:shadow-lg transition-all"
+                  className="px-2.5 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-bold text-white bg-[#005596] hover:bg-[#003B6E] active:scale-[0.98] rounded-xl shadow-md hover:shadow-lg transition-all"
                 >
-                  Join ACM
+                  <span className="hidden sm:inline">Join ACM</span>
+                  <span className="sm:hidden">Join</span>
                 </Link>
               </div>
             )}
@@ -135,7 +136,7 @@ export function Navbar() {
             {/* Mobile Hamburger Toggle Button (Hidden on lg: 1024px+ where nav is visible) */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 sm:p-2.5 lg:hidden text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-colors min-h-[40px] min-w-[40px] flex items-center justify-center flex-shrink-0"
+              className="p-1.5 sm:p-2.5 lg:hidden text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-colors min-h-[38px] min-w-[38px] flex items-center justify-center flex-shrink-0"
               aria-label="Toggle menu"
               aria-expanded={mobileMenuOpen}
             >
@@ -145,10 +146,10 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Drawer Menu (Visible on < md: 768px) */}
+      {/* Mobile Drawer Menu (Visible on < lg: 1024px) */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-slate-200 bg-white/95 backdrop-blur-md px-4 pt-3 pb-6 space-y-2 animate-fade-in shadow-xl">
-          {sessionUser && (
+        <div className="lg:hidden border-t border-slate-200 bg-white/95 backdrop-blur-md px-4 pt-3 pb-6 space-y-2 animate-fade-in shadow-xl">
+          {sessionUser ? (
             <div className="pb-3 border-b border-slate-100 mb-2 flex items-center justify-between gap-2">
               <Link
                 href={
@@ -171,6 +172,21 @@ export function Navbar() {
                 <LogOut className="w-4 h-4" />
                 <span>Sign Out</span>
               </button>
+            </div>
+          ) : (
+            <div className="pb-3 border-b border-slate-100 mb-2 grid grid-cols-2 gap-2 sm:hidden">
+              <Link
+                href="/login"
+                className="py-2.5 px-3 text-center border border-slate-200 text-[#005596] rounded-xl text-xs font-bold hover:bg-blue-50 transition-colors"
+              >
+                Login
+              </Link>
+              <Link
+                href="/signup"
+                className="py-2.5 px-3 text-center bg-[#005596] text-white rounded-xl text-xs font-bold hover:bg-[#003B6E] transition-colors shadow-sm"
+              >
+                Join ACM
+              </Link>
             </div>
           )}
 

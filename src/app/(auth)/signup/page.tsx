@@ -46,7 +46,7 @@ export default function SignUpPage() {
         throw new Error(data.error || 'Registration failed');
       }
 
-      router.push('/student');
+      window.location.href = '/student';
     } catch (err: any) {
       setError(err.message);
     } finally {

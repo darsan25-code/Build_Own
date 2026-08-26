@@ -29,16 +29,48 @@ export default function LoginPage() {
         throw new Error(data.error || 'Login failed');
       }
 
-      if (data.user.role === 'PLATFORM_ADMIN') {
-        router.push('/platform-admin');
-      } else if (data.user.role === 'CHAPTER_ADMIN' || data.user.role === 'CHAPTER_OFFICER') {
-        router.push('/chapter-admin');
-      } else {
-        router.push('/student');
-      }
+      const targetUrl =
+        data.user.role === 'PLATFORM_ADMIN'
+          ? '/platform-admin'
+          : data.user.role === 'CHAPTER_ADMIN' || data.user.role === 'CHAPTER_OFFICER'
+          ? '/chapter-admin'
+          : '/student';
+
+      window.location.href = targetUrl;
     } catch (err: any) {
       setError(err.message);
-    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDemoLogin = async (email: string) => {
+    setError('');
+    setLoading(true);
+    const password = 'Password123!';
+    setFormData({ email, password, rememberMe: true });
+
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || 'Demo login failed');
+      }
+
+      const targetUrl =
+        data.user.role === 'PLATFORM_ADMIN'
+          ? '/platform-admin'
+          : data.user.role === 'CHAPTER_ADMIN' || data.user.role === 'CHAPTER_OFFICER'
+          ? '/chapter-admin'
+          : '/student';
+
+      window.location.href = targetUrl;
+    } catch (err: any) {
+      setError(err.message);
       setLoading(false);
     }
   };
@@ -152,15 +184,17 @@ export default function LoginPage() {
             <div className="grid grid-cols-2 gap-3">
               <button
                 type="button"
-                onClick={() => setFormData({ email: 'alex@xyz.edu', password: 'Password123!', rememberMe: true })}
-                className="py-2.5 px-3 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 hover:bg-blue-50 hover:border-blue-200 hover:text-[#005596] transition-all flex items-center justify-center gap-2"
+                disabled={loading}
+                onClick={() => handleDemoLogin('alex@xyz.edu')}
+                className="py-2.5 px-3 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 hover:bg-blue-50 hover:border-blue-200 hover:text-[#005596] transition-all flex items-center justify-center gap-2 disabled:opacity-60"
               >
                 <span>Demo Student</span>
               </button>
               <button
                 type="button"
-                onClick={() => setFormData({ email: 'chapteradmin@xyz.edu', password: 'Password123!', rememberMe: true })}
-                className="py-2.5 px-3 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 hover:bg-blue-50 hover:border-blue-200 hover:text-[#005596] transition-all flex items-center justify-center gap-2"
+                disabled={loading}
+                onClick={() => handleDemoLogin('chapteradmin@xyz.edu')}
+                className="py-2.5 px-3 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 hover:bg-blue-50 hover:border-blue-200 hover:text-[#005596] transition-all flex items-center justify-center gap-2 disabled:opacity-60"
               >
                 <span>Demo Admin</span>
               </button>

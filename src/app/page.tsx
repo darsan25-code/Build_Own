@@ -104,9 +104,9 @@ export default async function HomePage() {
             </div>
 
             {/* RIGHT COLUMN: Premium High-Resolution Campus Photo Showcase & Connectivity Overlay */}
-            <div className="lg:col-span-6 relative mt-8 lg:mt-0 flex items-center justify-center">
+            <div className="lg:col-span-6 relative mt-8 lg:mt-0 flex items-center justify-center overflow-hidden rounded-3xl p-2 sm:p-4">
               {/* Subtle Lightweight Connectivity Network & Grid Graphic (SVG) */}
-              <div className="absolute -inset-6 sm:-inset-8 pointer-events-none opacity-40">
+              <div className="absolute inset-0 pointer-events-none opacity-40">
                 <svg className="w-full h-full" viewBox="0 0 500 400" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <pattern id="hero-dot-grid" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
                     <circle cx="2" cy="2" r="1" fill="#00A3E0" opacity="0.35" />
