@@ -3,30 +3,37 @@ import Link from 'next/link';
 export function BrandLogos({ variant = 'navbar' }: { variant?: 'navbar' | 'hero' | 'footer' }) {
   if (variant === 'footer') {
     return (
-      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
-        {/* ACM Official Brand — Full color official logo on clean background */}
-        <Link href="/" className="flex items-center gap-3 group transition-opacity hover:opacity-90">
-          <div className="h-10 px-2.5 py-1 bg-white rounded-xl shadow-sm flex items-center">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-5">
+        {/* ACM Official Brand Logo */}
+        <Link href="/" className="flex items-center gap-3 group transition-opacity hover:opacity-90 flex-shrink-0">
+          <div className="h-11 px-3 py-1.5 bg-white rounded-xl shadow-md flex items-center border border-slate-100">
             <img
               src="/images/acm_official_logo.svg"
               alt="Association for Computing Machinery"
-              className="h-8 w-auto object-contain"
+              className="h-8 sm:h-9 w-auto object-contain"
             />
           </div>
         </Link>
 
-        <div className="hidden sm:block w-px h-8 bg-slate-700" />
+        <div className="hidden sm:block w-px h-10 bg-slate-700/80 flex-shrink-0" />
 
         {/* Vel Tech High Tech Institution */}
         <Link href="/" className="flex items-center gap-3 group transition-opacity hover:opacity-90">
           <img
             src="/images/veltech_seal.png"
             alt="Vel Tech Seal"
-            className="w-10 h-10 object-contain rounded-full shadow-sm bg-white p-0.5"
+            className="w-11 h-11 object-contain rounded-full shadow-md bg-white p-0.5 flex-shrink-0"
           />
-          <div>
-            <span className="font-extrabold text-white text-xs block leading-tight">Vel Tech High Tech</span>
-            <span className="text-[10.5px] text-slate-400 block leading-tight">Dr.Rangarajan Dr.Sakunthala Engg College</span>
+          <div className="flex flex-col justify-center">
+            <span className="font-extrabold text-white text-xs sm:text-sm block leading-snug">
+              Vel Tech High Tech
+            </span>
+            <span className="text-[11px] sm:text-xs text-slate-300 font-medium block leading-snug">
+              Dr.Rangarajan Dr.Sakunthala Engineering College
+            </span>
+            <span className="text-[10.5px] font-bold text-[#00A3E0] block leading-snug mt-0.5">
+              ACM Student Chapter
+            </span>
           </div>
         </Link>
       </div>
