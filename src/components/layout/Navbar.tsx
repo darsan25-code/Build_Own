@@ -15,6 +15,7 @@ export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     fetch('/api/auth/me')
@@ -31,7 +32,7 @@ export function Navbar() {
     setDropdownOpen(false);
   }, [pathname]);
 
-  // Close profile dropdown when clicking/tapping outside or pressing Escape
+  // Close menus when clicking/tapping outside or pressing Escape
   useEffect(() => {
     function handleClickOutside(event: Event) {
       const target = event.target as Node | null;
@@ -42,17 +43,22 @@ export function Navbar() {
         return;
       }
 
-      // Ignore if click/tap occurred inside dropdown container (trigger + dropdown)
-      if (dropdownRef.current && dropdownRef.current.contains(target)) {
-        return;
-      }
+      // Check containment for dropdown and mobile menu
+      const isInsideDropdown = dropdownRef.current && dropdownRef.current.contains(target);
+      const isInsideMobileMenu = mobileMenuRef.current && mobileMenuRef.current.contains(target);
 
-      setDropdownOpen(false);
+      if (!isInsideDropdown) {
+        setDropdownOpen(false);
+      }
+      if (!isInsideMobileMenu) {
+        setMobileMenuOpen(false);
+      }
     }
 
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === 'Escape') {
         setDropdownOpen(false);
+        setMobileMenuOpen(false);
       }
     }
 
@@ -133,6 +139,7 @@ export function Navbar() {
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
+                    setMobileMenuOpen(false);
                     setDropdownOpen((prev) => !prev);
                   }}
                   onPointerDown={(e) => {
@@ -184,6 +191,7 @@ export function Navbar() {
                             ? '/chapter-admin'
                             : '/student'
                         }
+                        onClick={() => setDropdownOpen(false)}
                         className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-slate-700 hover:text-[#005596] hover:bg-blue-50/80 rounded-xl transition-colors"
                       >
                         <LayoutDashboard className="w-4 h-4 text-[#005596]" />
@@ -192,6 +200,7 @@ export function Navbar() {
 
                       <Link
                         href="/student/profile"
+                        onClick={() => setDropdownOpen(false)}
                         className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-slate-700 hover:text-[#005596] hover:bg-blue-50/80 rounded-xl transition-colors"
                       >
                         <User className="w-4 h-4 text-[#005596]" />
@@ -200,6 +209,7 @@ export function Navbar() {
 
                       <Link
                         href="/student/certificates"
+                        onClick={() => setDropdownOpen(false)}
                         className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-slate-700 hover:text-[#005596] hover:bg-blue-50/80 rounded-xl transition-colors"
                       >
                         <Award className="w-4 h-4 text-[#005596]" />
@@ -209,7 +219,10 @@ export function Navbar() {
 
                     <div className="border-t border-slate-100 pt-1">
                       <button
-                        onClick={handleLogout}
+                        onClick={() => {
+                          setDropdownOpen(false);
+                          handleLogout();
+                        }}
                         className="w-full flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-rose-600 hover:bg-rose-50 rounded-xl transition-colors text-left"
                       >
                         <LogOut className="w-4 h-4 text-rose-600" />
@@ -238,14 +251,23 @@ export function Navbar() {
             )}
 
             {/* Mobile Hamburger Toggle Button (< lg: 1024px) */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 lg:hidden text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-colors min-h-[38px] min-w-[38px] flex items-center justify-center flex-shrink-0"
-              aria-label="Toggle menu"
-              aria-expanded={mobileMenuOpen}
-            >
-              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-            </button>
+            <div ref={mobileMenuRef} className="lg:hidden flex items-center">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setDropdownOpen(false);
+                  setMobileMenuOpen((prev) => !prev);
+                }}
+                onPointerDown={(e) => {
+                  e.stopPropagation();
+                }}
+                className="p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-colors min-h-[38px] min-w-[38px] flex items-center justify-center flex-shrink-0"
+                aria-label="Toggle menu"
+                aria-expanded={mobileMenuOpen}
+              >
+                {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -279,6 +301,7 @@ export function Navbar() {
                       ? '/chapter-admin'
                       : '/student'
                   }
+                  onClick={() => setMobileMenuOpen(false)}
                   className="flex items-center gap-2 px-3 py-2.5 bg-blue-50 text-[#005596] border border-blue-100 rounded-xl text-xs font-bold shadow-sm"
                 >
                   <LayoutDashboard className="w-4 h-4" />
@@ -287,6 +310,7 @@ export function Navbar() {
 
                 <Link
                   href="/student/profile"
+                  onClick={() => setMobileMenuOpen(false)}
                   className="flex items-center gap-2 px-3 py-2.5 bg-slate-50 text-slate-700 border border-slate-200 rounded-xl text-xs font-semibold hover:bg-blue-50 transition-colors"
                 >
                   <User className="w-4 h-4 text-[#005596]" />
@@ -295,6 +319,7 @@ export function Navbar() {
 
                 <Link
                   href="/student/certificates"
+                  onClick={() => setMobileMenuOpen(false)}
                   className="flex items-center gap-2 px-3 py-2.5 bg-slate-50 text-slate-700 border border-slate-200 rounded-xl text-xs font-semibold hover:bg-blue-50 transition-colors"
                 >
                   <Award className="w-4 h-4 text-[#005596]" />
@@ -302,7 +327,10 @@ export function Navbar() {
                 </Link>
 
                 <button
-                  onClick={handleLogout}
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    handleLogout();
+                  }}
                   className="flex items-center gap-2 px-3 py-2.5 bg-rose-50 text-rose-600 border border-rose-100 rounded-xl text-xs font-semibold hover:bg-rose-100 transition-colors"
                 >
                   <LogOut className="w-4 h-4" />
@@ -314,12 +342,14 @@ export function Navbar() {
             <div className="pb-3 border-b border-slate-100 mb-2 grid grid-cols-2 gap-2 sm:hidden">
               <Link
                 href="/login"
+                onClick={() => setMobileMenuOpen(false)}
                 className="py-2.5 px-3 text-center border border-slate-200 text-[#005596] rounded-xl text-xs font-bold hover:bg-blue-50 transition-colors"
               >
                 Login
               </Link>
               <Link
                 href="/signup"
+                onClick={() => setMobileMenuOpen(false)}
                 className="py-2.5 px-3 text-center bg-[#005596] text-white rounded-xl text-xs font-bold hover:bg-[#003B6E] transition-colors shadow-sm"
               >
                 Join ACM
