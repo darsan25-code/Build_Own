@@ -38,7 +38,7 @@ export function Navbar() {
       const target = event.target as Node | null;
       if (!target) return;
 
-      // Ignore if target was detached/unmounted during event cycle on iOS Safari
+      // Ignore if target was detached/unmounted during event cycle
       if (document.body && !document.body.contains(target)) {
         return;
       }
@@ -62,17 +62,22 @@ export function Navbar() {
       }
     }
 
-    document.addEventListener('pointerdown', handleClickOutside);
+    document.addEventListener('click', handleClickOutside);
     document.addEventListener('keydown', handleKeyDown);
     return () => {
-      document.removeEventListener('pointerdown', handleClickOutside);
+      document.removeEventListener('click', handleClickOutside);
       document.removeEventListener('keydown', handleKeyDown);
     };
   }, []);
 
   const handleLogout = async () => {
-    await fetch('/api/auth/logout', { method: 'POST' });
-    window.location.href = '/';
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+    } catch (err) {
+      console.error('Logout error', err);
+    } finally {
+      window.location.href = '/';
+    }
   };
 
   const navLinks = [
@@ -128,7 +133,7 @@ export function Navbar() {
           <div className="flex items-center gap-1.5 sm:gap-2 lg:gap-3 flex-shrink-0">
             <button
               aria-label="Search platform"
-              className="p-2 text-slate-500 hover:text-[#005596] rounded-xl hover:bg-slate-100/80 transition-colors flex-shrink-0"
+              className="p-2 text-slate-500 hover:text-[#005596] rounded-xl hover:bg-slate-100/80 transition-colors flex-shrink-0 cursor-pointer"
             >
               <Search className="w-4 h-4" />
             </button>
@@ -145,7 +150,7 @@ export function Navbar() {
                   onPointerDown={(e) => {
                     e.stopPropagation();
                   }}
-                  className="flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl bg-blue-50/80 hover:bg-blue-100/80 border border-blue-100 text-slate-800 font-semibold text-xs sm:text-sm transition-all focus:outline-none focus:ring-2 focus:ring-[#005596]/20 shadow-sm"
+                  className="flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl bg-blue-50/80 hover:bg-blue-100/80 border border-blue-100 text-slate-800 font-semibold text-xs sm:text-sm transition-all focus:outline-none focus:ring-2 focus:ring-[#005596]/20 shadow-sm cursor-pointer select-none"
                   aria-expanded={dropdownOpen}
                   aria-haspopup="true"
                   title="Account Menu"
@@ -191,8 +196,11 @@ export function Navbar() {
                             ? '/chapter-admin'
                             : '/student'
                         }
-                        onClick={() => setDropdownOpen(false)}
-                        className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-slate-700 hover:text-[#005596] hover:bg-blue-50/80 rounded-xl transition-colors"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setDropdownOpen(false);
+                        }}
+                        className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-slate-700 hover:text-[#005596] hover:bg-blue-50/80 rounded-xl transition-colors cursor-pointer"
                       >
                         <LayoutDashboard className="w-4 h-4 text-[#005596]" />
                         <span>Dashboard</span>
@@ -200,8 +208,11 @@ export function Navbar() {
 
                       <Link
                         href="/student/profile"
-                        onClick={() => setDropdownOpen(false)}
-                        className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-slate-700 hover:text-[#005596] hover:bg-blue-50/80 rounded-xl transition-colors"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setDropdownOpen(false);
+                        }}
+                        className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-slate-700 hover:text-[#005596] hover:bg-blue-50/80 rounded-xl transition-colors cursor-pointer"
                       >
                         <User className="w-4 h-4 text-[#005596]" />
                         <span>Profile &amp; Settings</span>
@@ -209,8 +220,11 @@ export function Navbar() {
 
                       <Link
                         href="/student/certificates"
-                        onClick={() => setDropdownOpen(false)}
-                        className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-slate-700 hover:text-[#005596] hover:bg-blue-50/80 rounded-xl transition-colors"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setDropdownOpen(false);
+                        }}
+                        className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-slate-700 hover:text-[#005596] hover:bg-blue-50/80 rounded-xl transition-colors cursor-pointer"
                       >
                         <Award className="w-4 h-4 text-[#005596]" />
                         <span>My Certificates</span>
@@ -219,11 +233,11 @@ export function Navbar() {
 
                     <div className="border-t border-slate-100 pt-1">
                       <button
-                        onClick={() => {
-                          setDropdownOpen(false);
+                        onClick={(e) => {
+                          e.stopPropagation();
                           handleLogout();
                         }}
-                        className="w-full flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-rose-600 hover:bg-rose-50 rounded-xl transition-colors text-left"
+                        className="w-full flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-rose-600 hover:bg-rose-50 rounded-xl transition-colors text-left cursor-pointer select-none"
                       >
                         <LogOut className="w-4 h-4 text-rose-600" />
                         <span>Sign Out</span>
@@ -236,13 +250,13 @@ export function Navbar() {
               <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
                 <Link
                   href="/login"
-                  className="px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold text-[#005596] hover:bg-[#005596]/10 rounded-xl transition-colors hidden sm:inline-flex"
+                  className="px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold text-[#005596] hover:bg-[#005596]/10 rounded-xl transition-colors hidden sm:inline-flex cursor-pointer"
                 >
                   Login
                 </Link>
                 <Link
                   href="/signup"
-                  className="px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-bold text-white bg-[#005596] hover:bg-[#003B6E] active:scale-[0.98] rounded-xl shadow-md hover:shadow-lg transition-all"
+                  className="px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-bold text-white bg-[#005596] hover:bg-[#003B6E] active:scale-[0.98] rounded-xl shadow-md hover:shadow-lg transition-all cursor-pointer"
                 >
                   <span className="hidden sm:inline">Join ACM</span>
                   <span className="sm:hidden">Join</span>
@@ -261,7 +275,7 @@ export function Navbar() {
                 onPointerDown={(e) => {
                   e.stopPropagation();
                 }}
-                className="p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-colors min-h-[38px] min-w-[38px] flex items-center justify-center flex-shrink-0"
+                className="p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-colors min-h-[38px] min-w-[38px] flex items-center justify-center flex-shrink-0 cursor-pointer select-none"
                 aria-label="Toggle menu"
                 aria-expanded={mobileMenuOpen}
               >
@@ -301,8 +315,11 @@ export function Navbar() {
                       ? '/chapter-admin'
                       : '/student'
                   }
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-2 px-3 py-2.5 bg-blue-50 text-[#005596] border border-blue-100 rounded-xl text-xs font-bold shadow-sm"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setMobileMenuOpen(false);
+                  }}
+                  className="flex items-center gap-2 px-3 py-2.5 bg-blue-50 text-[#005596] border border-blue-100 rounded-xl text-xs font-bold shadow-sm cursor-pointer"
                 >
                   <LayoutDashboard className="w-4 h-4" />
                   <span>Dashboard</span>
@@ -310,8 +327,11 @@ export function Navbar() {
 
                 <Link
                   href="/student/profile"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-2 px-3 py-2.5 bg-slate-50 text-slate-700 border border-slate-200 rounded-xl text-xs font-semibold hover:bg-blue-50 transition-colors"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setMobileMenuOpen(false);
+                  }}
+                  className="flex items-center gap-2 px-3 py-2.5 bg-slate-50 text-slate-700 border border-slate-200 rounded-xl text-xs font-semibold hover:bg-blue-50 transition-colors cursor-pointer"
                 >
                   <User className="w-4 h-4 text-[#005596]" />
                   <span>Profile &amp; Settings</span>
@@ -319,19 +339,23 @@ export function Navbar() {
 
                 <Link
                   href="/student/certificates"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center gap-2 px-3 py-2.5 bg-slate-50 text-slate-700 border border-slate-200 rounded-xl text-xs font-semibold hover:bg-blue-50 transition-colors"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setMobileMenuOpen(false);
+                  }}
+                  className="flex items-center gap-2 px-3 py-2.5 bg-slate-50 text-slate-700 border border-slate-200 rounded-xl text-xs font-semibold hover:bg-blue-50 transition-colors cursor-pointer"
                 >
                   <Award className="w-4 h-4 text-[#005596]" />
                   <span>Certificates</span>
                 </Link>
 
                 <button
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.stopPropagation();
                     setMobileMenuOpen(false);
                     handleLogout();
                   }}
-                  className="flex items-center gap-2 px-3 py-2.5 bg-rose-50 text-rose-600 border border-rose-100 rounded-xl text-xs font-semibold hover:bg-rose-100 transition-colors"
+                  className="flex items-center gap-2 px-3 py-2.5 bg-rose-50 text-rose-600 border border-rose-100 rounded-xl text-xs font-semibold hover:bg-rose-100 transition-colors cursor-pointer select-none"
                 >
                   <LogOut className="w-4 h-4" />
                   <span>Sign Out</span>
@@ -342,15 +366,21 @@ export function Navbar() {
             <div className="pb-3 border-b border-slate-100 mb-2 grid grid-cols-2 gap-2 sm:hidden">
               <Link
                 href="/login"
-                onClick={() => setMobileMenuOpen(false)}
-                className="py-2.5 px-3 text-center border border-slate-200 text-[#005596] rounded-xl text-xs font-bold hover:bg-blue-50 transition-colors"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setMobileMenuOpen(false);
+                }}
+                className="py-2.5 px-3 text-center border border-slate-200 text-[#005596] rounded-xl text-xs font-bold hover:bg-blue-50 transition-colors cursor-pointer"
               >
                 Login
               </Link>
               <Link
                 href="/signup"
-                onClick={() => setMobileMenuOpen(false)}
-                className="py-2.5 px-3 text-center bg-[#005596] text-white rounded-xl text-xs font-bold hover:bg-[#003B6E] transition-colors shadow-sm"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setMobileMenuOpen(false);
+                }}
+                className="py-2.5 px-3 text-center bg-[#005596] text-white rounded-xl text-xs font-bold hover:bg-[#003B6E] transition-colors shadow-sm cursor-pointer"
               >
                 Join ACM
               </Link>
@@ -366,7 +396,11 @@ export function Navbar() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-semibold transition-colors min-h-[44px] ${
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setMobileMenuOpen(false);
+                }}
+                className={`flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-semibold transition-colors min-h-[44px] cursor-pointer ${
                   isActive
                     ? 'bg-blue-50 text-[#005596] border border-blue-100'
                     : 'text-slate-700 hover:bg-slate-50'
