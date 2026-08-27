@@ -191,7 +191,7 @@ export default function ContestDetailPage() {
                 contest.isRegistered ? (
                   <Link
                     href={`/contests/${contest.slug}/arena`}
-                    className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-sm transition-all shadow-lg shadow-emerald-600/30 flex items-center justify-center gap-2"
+                    className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-sm transition-all duration-150 active:scale-[0.98] shadow-lg shadow-emerald-600/30 flex items-center justify-center gap-2"
                   >
                     <Zap className="w-4 h-4 text-emerald-200" />
                     Enter Coding Arena Now
@@ -200,7 +200,7 @@ export default function ContestDetailPage() {
                   <button
                     onClick={handleRegister}
                     disabled={registering}
-                    className="w-full py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white font-bold text-sm transition-all shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2"
+                    className="w-full py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white font-bold text-sm transition-all duration-150 active:scale-[0.98] shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2"
                   >
                     {registering ? 'Registering...' : 'Register to Participate'}
                     <ChevronRight className="w-4 h-4" />
@@ -215,7 +215,7 @@ export default function ContestDetailPage() {
                 <button
                   onClick={handleRegister}
                   disabled={registering}
-                  className="w-full py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white font-bold text-sm transition-all shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2"
+                  className="w-full py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white font-bold text-sm transition-all duration-150 active:scale-[0.98] shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2"
                 >
                   {registering ? 'Registering...' : 'Register for Contest'}
                   <ChevronRight className="w-4 h-4" />
@@ -224,7 +224,7 @@ export default function ContestDetailPage() {
 
               <Link
                 href={`/contests/${contest.slug}/leaderboard`}
-                className="w-full py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-colors flex items-center justify-center gap-1.5"
+                className="w-full py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-colors duration-150 active:scale-[0.98] flex items-center justify-center gap-1.5"
               >
                 <Trophy className="w-3.5 h-3.5 text-amber-400" />
                 View Live Standings

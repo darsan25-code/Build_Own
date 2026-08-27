@@ -31,22 +31,35 @@ export function Navbar() {
     setDropdownOpen(false);
   }, [pathname]);
 
-  // Close profile dropdown when clicking outside or pressing Escape
+  // Close profile dropdown when clicking/tapping outside or pressing Escape
   useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setDropdownOpen(false);
+    function handleClickOutside(event: Event) {
+      const target = event.target as Node | null;
+      if (!target) return;
+
+      // Ignore if target was detached/unmounted during event cycle on iOS Safari
+      if (document.body && !document.body.contains(target)) {
+        return;
       }
+
+      // Ignore if click/tap occurred inside dropdown container (trigger + dropdown)
+      if (dropdownRef.current && dropdownRef.current.contains(target)) {
+        return;
+      }
+
+      setDropdownOpen(false);
     }
+
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === 'Escape') {
         setDropdownOpen(false);
       }
     }
-    document.addEventListener('mousedown', handleClickOutside);
+
+    document.addEventListener('pointerdown', handleClickOutside);
     document.addEventListener('keydown', handleKeyDown);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('pointerdown', handleClickOutside);
       document.removeEventListener('keydown', handleKeyDown);
     };
   }, []);
@@ -118,7 +131,13 @@ export function Navbar() {
               <div className="relative" ref={dropdownRef}>
                 {/* Compact User Account Trigger Pill */}
                 <button
-                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setDropdownOpen((prev) => !prev);
+                  }}
+                  onPointerDown={(e) => {
+                    e.stopPropagation();
+                  }}
                   className="flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl bg-blue-50/80 hover:bg-blue-100/80 border border-blue-100 text-slate-800 font-semibold text-xs sm:text-sm transition-all focus:outline-none focus:ring-2 focus:ring-[#005596]/20 shadow-sm"
                   aria-expanded={dropdownOpen}
                   aria-haspopup="true"

@@ -157,7 +157,7 @@ export default function ContestsPage() {
               <button
                 key={tab}
                 onClick={() => setFilter(tab)}
-                className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold tracking-wide transition-all ${
+                className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold tracking-wide transition-all duration-150 active:scale-95 ${
                   filter === tab
                     ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/30'
                     : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
@@ -201,17 +201,8 @@ export default function ContestsPage() {
                     isLive
                       ? 'border-emerald-500/50 shadow-lg shadow-emerald-500/5 hover:border-emerald-400'
                       : 'border-slate-800 hover:border-slate-700'
-                  } p-5 transition-all duration-300 flex flex-col justify-between overflow-hidden`}
+                  } p-5 transition-all duration-200 flex flex-col justify-between overflow-hidden`}
                 >
-                  {/* Subtle ACM Logo Watermark - top right corner, non-overlapping */}
-                  <div className="absolute top-2.5 right-2.5 flex items-center opacity-30 pointer-events-none z-0">
-                    <img
-                      src="/images/acm_official_logo.svg"
-                      alt="ACM Watermark"
-                      className="h-4 sm:h-5 w-auto object-contain"
-                    />
-                  </div>
-
                   <div className="relative z-10 space-y-3">
                     {/* Status + Duration + Prize Badge Row */}
                     <div className="flex flex-wrap items-center justify-between gap-2">
@@ -288,14 +279,14 @@ export default function ContestsPage() {
                   <div className="flex items-center gap-2.5 mt-4 pt-3 border-t border-slate-800/80 relative z-10">
                     <Link
                       href={`/contests/${contest.slug}`}
-                      className="flex-1 text-center py-2 px-3 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs transition-colors"
+                      className="flex-1 text-center py-2 px-3 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs transition-colors duration-150 active:scale-[0.98]"
                     >
                       Details &amp; Rules
                     </Link>
                     {isLive ? (
                       <Link
                         href={`/contests/${contest.slug}/arena`}
-                        className="flex-1 text-center py-2 px-3 rounded-lg bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs transition-all shadow-lg shadow-emerald-600/20 flex items-center justify-center gap-1.5"
+                        className="flex-1 text-center py-2 px-3 rounded-lg bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold text-xs transition-all duration-150 active:scale-[0.98] shadow-lg shadow-emerald-600/20 flex items-center justify-center gap-1.5"
                       >
                         <Zap className="w-3.5 h-3.5 text-emerald-200" />
                         Enter Arena
@@ -303,7 +294,7 @@ export default function ContestsPage() {
                     ) : (
                       <Link
                         href={`/contests/${contest.slug}`}
-                        className="flex-1 text-center py-2 px-3 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs transition-all shadow-lg shadow-blue-600/20 flex items-center justify-center gap-1"
+                        className="flex-1 text-center py-2 px-3 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs transition-all duration-150 active:scale-[0.98] shadow-lg shadow-blue-600/20 flex items-center justify-center gap-1"
                       >
                         Register
                         <ChevronRight className="w-3.5 h-3.5" />
