@@ -16,6 +16,7 @@ export function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const mobileDrawerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     fetch('/api/auth/me')
@@ -38,14 +39,23 @@ export function Navbar() {
       const target = event.target as Node | null;
       if (!target) return;
 
-      // Ignore if target was detached/unmounted during event cycle
+      // Ignore if target was detached/unmounted during event cycle on iOS Safari
       if (document.body && !document.body.contains(target)) {
         return;
       }
 
-      // Check containment for dropdown and mobile menu
-      const isInsideDropdown = dropdownRef.current && dropdownRef.current.contains(target);
-      const isInsideMobileMenu = mobileMenuRef.current && mobileMenuRef.current.contains(target);
+      const isElement = target instanceof Element;
+
+      // Check containment for mobile menu (button + drawer + data attribute)
+      const isInsideMobileMenu =
+        (mobileMenuRef.current && mobileMenuRef.current.contains(target)) ||
+        (mobileDrawerRef.current && mobileDrawerRef.current.contains(target)) ||
+        (isElement && target.closest('[data-mobile-menu="true"]') !== null);
+
+      // Check containment for profile dropdown
+      const isInsideDropdown =
+        (dropdownRef.current && dropdownRef.current.contains(target)) ||
+        (isElement && target.closest('[data-profile-dropdown="true"]') !== null);
 
       if (!isInsideDropdown) {
         setDropdownOpen(false);
@@ -139,9 +149,10 @@ export function Navbar() {
             </button>
 
             {sessionUser ? (
-              <div className="relative" ref={dropdownRef}>
+              <div className="relative" ref={dropdownRef} data-profile-dropdown="true">
                 {/* Compact User Account Trigger Pill */}
                 <button
+                  data-profile-dropdown="true"
                   onClick={(e) => {
                     e.stopPropagation();
                     setMobileMenuOpen(false);
@@ -265,8 +276,9 @@ export function Navbar() {
             )}
 
             {/* Mobile Hamburger Toggle Button (< lg: 1024px) */}
-            <div ref={mobileMenuRef} className="lg:hidden flex items-center">
+            <div ref={mobileMenuRef} data-mobile-menu="true" className="lg:hidden flex items-center">
               <button
+                data-mobile-menu="true"
                 onClick={(e) => {
                   e.stopPropagation();
                   setDropdownOpen(false);
@@ -288,7 +300,11 @@ export function Navbar() {
 
       {/* Mobile Drawer Menu (< lg: 1024px) */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-slate-200 bg-white/95 backdrop-blur-md px-4 pt-3 pb-6 space-y-2 animate-fade-in shadow-xl max-h-[85vh] overflow-y-auto">
+        <div
+          ref={mobileDrawerRef}
+          data-mobile-menu="true"
+          className="lg:hidden border-t border-slate-200 bg-white/95 backdrop-blur-md px-4 pt-3 pb-6 space-y-2 animate-fade-in shadow-xl max-h-[85vh] overflow-y-auto"
+        >
           {sessionUser ? (
             <div className="pb-3 border-b border-slate-100 mb-2 space-y-2">
               <div className="p-3 bg-slate-50 border border-slate-100 rounded-xl flex items-center justify-between gap-3">
