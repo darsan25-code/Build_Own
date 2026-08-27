@@ -15,8 +15,6 @@ export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const mobileMenuRef = useRef<HTMLDivElement>(null);
-  const mobileDrawerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     fetch('/api/auth/me')
@@ -33,35 +31,19 @@ export function Navbar() {
     setDropdownOpen(false);
   }, [pathname]);
 
-  // Close menus when clicking/tapping outside or pressing Escape
+  // Close profile dropdown when clicking outside or pressing Escape
   useEffect(() => {
     function handleClickOutside(event: Event) {
       const target = event.target as Node | null;
       if (!target) return;
 
-      // Ignore if target was detached/unmounted during event cycle on iOS Safari
       if (document.body && !document.body.contains(target)) {
         return;
       }
 
-      const isElement = target instanceof Element;
-
-      // Check containment for mobile menu (button + drawer + data attribute)
-      const isInsideMobileMenu =
-        (mobileMenuRef.current && mobileMenuRef.current.contains(target)) ||
-        (mobileDrawerRef.current && mobileDrawerRef.current.contains(target)) ||
-        (isElement && target.closest('[data-mobile-menu="true"]') !== null);
-
-      // Check containment for profile dropdown
-      const isInsideDropdown =
-        (dropdownRef.current && dropdownRef.current.contains(target)) ||
-        (isElement && target.closest('[data-profile-dropdown="true"]') !== null);
-
+      const isInsideDropdown = dropdownRef.current && dropdownRef.current.contains(target);
       if (!isInsideDropdown) {
         setDropdownOpen(false);
-      }
-      if (!isInsideMobileMenu) {
-        setMobileMenuOpen(false);
       }
     }
 
@@ -72,13 +54,15 @@ export function Navbar() {
       }
     }
 
-    document.addEventListener('click', handleClickOutside);
+    if (dropdownOpen) {
+      document.addEventListener('click', handleClickOutside);
+    }
     document.addEventListener('keydown', handleKeyDown);
     return () => {
       document.removeEventListener('click', handleClickOutside);
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, []);
+  }, [dropdownOpen]);
 
   const handleLogout = async () => {
     try {
@@ -157,9 +141,6 @@ export function Navbar() {
                     e.stopPropagation();
                     setMobileMenuOpen(false);
                     setDropdownOpen((prev) => !prev);
-                  }}
-                  onPointerDown={(e) => {
-                    e.stopPropagation();
                   }}
                   className="flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl bg-blue-50/80 hover:bg-blue-100/80 border border-blue-100 text-slate-800 font-semibold text-xs sm:text-sm transition-all focus:outline-none focus:ring-2 focus:ring-[#005596]/20 shadow-sm cursor-pointer select-none"
                   aria-expanded={dropdownOpen}
@@ -275,163 +256,148 @@ export function Navbar() {
               </div>
             )}
 
-            {/* Mobile Hamburger Toggle Button (< lg: 1024px) */}
-            <div ref={mobileMenuRef} data-mobile-menu="true" className="lg:hidden flex items-center">
-              <button
-                data-mobile-menu="true"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setDropdownOpen(false);
-                  setMobileMenuOpen((prev) => !prev);
-                }}
-                onPointerDown={(e) => {
-                  e.stopPropagation();
-                }}
-                className="p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-xl transition-colors min-h-[38px] min-w-[38px] flex items-center justify-center flex-shrink-0 cursor-pointer select-none"
-                aria-label="Toggle menu"
-                aria-expanded={mobileMenuOpen}
-              >
-                {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-              </button>
-            </div>
+            {/* Redesigned Mobile Hamburger Button (< lg: 1024px) */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setDropdownOpen(false);
+                setMobileMenuOpen((prev) => !prev);
+              }}
+              className="lg:hidden w-10 h-10 min-w-[44px] min-h-[44px] rounded-xl border border-slate-200/90 bg-white hover:bg-slate-50 text-slate-700 hover:text-[#005596] shadow-sm flex items-center justify-center flex-shrink-0 cursor-pointer select-none touch-manipulation transition-all active:scale-95 focus:outline-none focus:ring-2 focus:ring-[#005596]/20"
+              aria-label="Toggle menu"
+              aria-expanded={mobileMenuOpen}
+            >
+              {mobileMenuOpen ? (
+                <X className="w-5 h-5 transition-transform duration-200" />
+              ) : (
+                <Menu className="w-5 h-5 transition-transform duration-200" />
+              )}
+            </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Drawer Menu (< lg: 1024px) */}
+      {/* Mobile Drawer Menu & Backdrop Overlay (< lg: 1024px) */}
       {mobileMenuOpen && (
-        <div
-          ref={mobileDrawerRef}
-          data-mobile-menu="true"
-          className="lg:hidden border-t border-slate-200 bg-white/95 backdrop-blur-md px-4 pt-3 pb-6 space-y-2 animate-fade-in shadow-xl max-h-[85vh] overflow-y-auto"
-        >
-          {sessionUser ? (
-            <div className="pb-3 border-b border-slate-100 mb-2 space-y-2">
-              <div className="p-3 bg-slate-50 border border-slate-100 rounded-xl flex items-center justify-between gap-3">
-                <div className="flex items-center gap-2.5 min-w-0">
-                  <div className="w-9 h-9 rounded-full bg-[#005596] text-white font-extrabold text-sm flex items-center justify-center flex-shrink-0 shadow-sm">
-                    {sessionUser.name.charAt(0)}
+        <>
+          {/* Backdrop overlay for outside tap closure */}
+          <div
+            onClick={() => setMobileMenuOpen(false)}
+            className="lg:hidden fixed inset-0 top-16 sm:top-18 bg-slate-900/20 backdrop-blur-xs z-40 animate-fade-in"
+            aria-hidden="true"
+          />
+
+          {/* Drawer Panel */}
+          <div className="lg:hidden border-t border-slate-200 bg-white/95 backdrop-blur-md px-4 pt-3 pb-6 space-y-2 animate-fade-in shadow-xl max-h-[85vh] overflow-y-auto relative z-50">
+            {sessionUser ? (
+              <div className="pb-3 border-b border-slate-100 mb-2 space-y-2">
+                <div className="p-3 bg-slate-50 border border-slate-100 rounded-xl flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    <div className="w-9 h-9 rounded-full bg-[#005596] text-white font-extrabold text-sm flex items-center justify-center flex-shrink-0 shadow-sm">
+                      {sessionUser.name.charAt(0)}
+                    </div>
+                    <div className="min-w-0">
+                      <div className="text-xs font-bold text-slate-900 truncate">{sessionUser.name}</div>
+                      <div className="text-[10.5px] text-slate-500 truncate">{sessionUser.email}</div>
+                    </div>
                   </div>
-                  <div className="min-w-0">
-                    <div className="text-xs font-bold text-slate-900 truncate">{sessionUser.name}</div>
-                    <div className="text-[10.5px] text-slate-500 truncate">{sessionUser.email}</div>
-                  </div>
-                </div>
-                <span className="px-2 py-0.5 text-[10px] font-bold bg-emerald-100 text-emerald-800 rounded-full flex-shrink-0">
-                  Active
-                </span>
-              </div>
-
-              <div className="grid grid-cols-2 gap-2">
-                <Link
-                  href={
-                    sessionUser.role === 'PLATFORM_ADMIN'
-                      ? '/platform-admin'
-                      : sessionUser.role === 'CHAPTER_ADMIN' || sessionUser.role === 'CHAPTER_OFFICER'
-                      ? '/chapter-admin'
-                      : '/student'
-                  }
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setMobileMenuOpen(false);
-                  }}
-                  className="flex items-center gap-2 px-3 py-2.5 bg-blue-50 text-[#005596] border border-blue-100 rounded-xl text-xs font-bold shadow-sm cursor-pointer"
-                >
-                  <LayoutDashboard className="w-4 h-4" />
-                  <span>Dashboard</span>
-                </Link>
-
-                <Link
-                  href="/student/profile"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setMobileMenuOpen(false);
-                  }}
-                  className="flex items-center gap-2 px-3 py-2.5 bg-slate-50 text-slate-700 border border-slate-200 rounded-xl text-xs font-semibold hover:bg-blue-50 transition-colors cursor-pointer"
-                >
-                  <User className="w-4 h-4 text-[#005596]" />
-                  <span>Profile &amp; Settings</span>
-                </Link>
-
-                <Link
-                  href="/student/certificates"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setMobileMenuOpen(false);
-                  }}
-                  className="flex items-center gap-2 px-3 py-2.5 bg-slate-50 text-slate-700 border border-slate-200 rounded-xl text-xs font-semibold hover:bg-blue-50 transition-colors cursor-pointer"
-                >
-                  <Award className="w-4 h-4 text-[#005596]" />
-                  <span>Certificates</span>
-                </Link>
-
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setMobileMenuOpen(false);
-                    handleLogout();
-                  }}
-                  className="flex items-center gap-2 px-3 py-2.5 bg-rose-50 text-rose-600 border border-rose-100 rounded-xl text-xs font-semibold hover:bg-rose-100 transition-colors cursor-pointer select-none"
-                >
-                  <LogOut className="w-4 h-4" />
-                  <span>Sign Out</span>
-                </button>
-              </div>
-            </div>
-          ) : (
-            <div className="pb-3 border-b border-slate-100 mb-2 grid grid-cols-2 gap-2 sm:hidden">
-              <Link
-                href="/login"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setMobileMenuOpen(false);
-                }}
-                className="py-2.5 px-3 text-center border border-slate-200 text-[#005596] rounded-xl text-xs font-bold hover:bg-blue-50 transition-colors cursor-pointer"
-              >
-                Login
-              </Link>
-              <Link
-                href="/signup"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setMobileMenuOpen(false);
-                }}
-                className="py-2.5 px-3 text-center bg-[#005596] text-white rounded-xl text-xs font-bold hover:bg-[#003B6E] transition-colors shadow-sm cursor-pointer"
-              >
-                Join ACM
-              </Link>
-            </div>
-          )}
-
-          {navLinks.map((item) => {
-            const isActive = item.exact
-              ? pathname === item.href
-              : pathname.startsWith(item.href);
-
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setMobileMenuOpen(false);
-                }}
-                className={`flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-semibold transition-colors min-h-[44px] cursor-pointer ${
-                  isActive
-                    ? 'bg-blue-50 text-[#005596] border border-blue-100'
-                    : 'text-slate-700 hover:bg-slate-50'
-                }`}
-              >
-                <span>{item.label}</span>
-                {item.badge && (
-                  <span className="bg-emerald-500 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider">
-                    {item.badge}
+                  <span className="px-2 py-0.5 text-[10px] font-bold bg-emerald-100 text-emerald-800 rounded-full flex-shrink-0">
+                    Active
                   </span>
-                )}
-              </Link>
-            );
-          })}
-        </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-2">
+                  <Link
+                    href={
+                      sessionUser.role === 'PLATFORM_ADMIN'
+                        ? '/platform-admin'
+                        : sessionUser.role === 'CHAPTER_ADMIN' || sessionUser.role === 'CHAPTER_OFFICER'
+                        ? '/chapter-admin'
+                        : '/student'
+                    }
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-2 px-3 py-2.5 bg-blue-50 text-[#005596] border border-blue-100 rounded-xl text-xs font-bold shadow-sm cursor-pointer"
+                  >
+                    <LayoutDashboard className="w-4 h-4" />
+                    <span>Dashboard</span>
+                  </Link>
+
+                  <Link
+                    href="/student/profile"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-2 px-3 py-2.5 bg-slate-50 text-slate-700 border border-slate-200 rounded-xl text-xs font-semibold hover:bg-blue-50 transition-colors cursor-pointer"
+                  >
+                    <User className="w-4 h-4 text-[#005596]" />
+                    <span>Profile &amp; Settings</span>
+                  </Link>
+
+                  <Link
+                    href="/student/certificates"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-2 px-3 py-2.5 bg-slate-50 text-slate-700 border border-slate-200 rounded-xl text-xs font-semibold hover:bg-blue-50 transition-colors cursor-pointer"
+                  >
+                    <Award className="w-4 h-4 text-[#005596]" />
+                    <span>Certificates</span>
+                  </Link>
+
+                  <button
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      handleLogout();
+                    }}
+                    className="flex items-center gap-2 px-3 py-2.5 bg-rose-50 text-rose-600 border border-rose-100 rounded-xl text-xs font-semibold hover:bg-rose-100 transition-colors cursor-pointer select-none"
+                  >
+                    <LogOut className="w-4 h-4" />
+                    <span>Sign Out</span>
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="pb-3 border-b border-slate-100 mb-2 grid grid-cols-2 gap-2 sm:hidden">
+                <Link
+                  href="/login"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="py-2.5 px-3 text-center border border-slate-200 text-[#005596] rounded-xl text-xs font-bold hover:bg-blue-50 transition-colors cursor-pointer"
+                >
+                  Login
+                </Link>
+                <Link
+                  href="/signup"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="py-2.5 px-3 text-center bg-[#005596] text-white rounded-xl text-xs font-bold hover:bg-[#003B6E] transition-colors shadow-sm cursor-pointer"
+                >
+                  Join ACM
+                </Link>
+              </div>
+            )}
+
+            {navLinks.map((item) => {
+              const isActive = item.exact
+                ? pathname === item.href
+                : pathname.startsWith(item.href);
+
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`flex items-center justify-between px-3.5 py-3 rounded-xl text-sm font-semibold transition-colors min-h-[44px] cursor-pointer ${
+                    isActive
+                      ? 'bg-blue-50 text-[#005596] border border-blue-100'
+                      : 'text-slate-700 hover:bg-slate-50'
+                  }`}
+                >
+                  <span>{item.label}</span>
+                  {item.badge && (
+                    <span className="bg-emerald-500 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider">
+                      {item.badge}
+                    </span>
+                  )}
+                </Link>
+              );
+            })}
+          </div>
+        </>
       )}
     </header>
   );
