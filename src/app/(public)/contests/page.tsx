@@ -66,11 +66,13 @@ export default function ContestsPage() {
             <div className="flex items-center gap-4">
               {/* ACM Logo */}
               <div className="flex items-center gap-2.5">
-                <img
-                  src="/images/acm_official_logo.svg"
-                  alt="ACM"
-                  className="h-10 w-auto object-contain filter brightness-0 invert"
-                />
+                <div className="h-9 sm:h-10 px-2.5 py-1 bg-white rounded-xl flex items-center shadow-sm flex-shrink-0">
+                  <img
+                    src="/images/acm_official_logo.svg"
+                    alt="ACM Official Logo"
+                    className="h-7 sm:h-8 w-auto object-contain"
+                  />
+                </div>
                 <div className="h-8 w-px bg-white/20" />
                 {/* Vel Tech Seal */}
                 <img
@@ -191,7 +193,6 @@ export default function ContestsPage() {
               const isLive = contest.status === 'LIVE';
               const isUpcoming = contest.status === 'UPCOMING';
               const startDate = new Date(contest.startTime);
-              const endDate = new Date(contest.endTime);
 
               return (
                 <div
@@ -200,52 +201,55 @@ export default function ContestsPage() {
                     isLive
                       ? 'border-emerald-500/50 shadow-lg shadow-emerald-500/5 hover:border-emerald-400'
                       : 'border-slate-800 hover:border-slate-700'
-                  } p-5 transition-all duration-300 flex flex-col justify-between`}
+                  } p-5 transition-all duration-300 flex flex-col justify-between overflow-hidden`}
                 >
-                  {/* ACM Badge - top right corner */}
-                  <div className="absolute top-3 right-3 flex items-center gap-1.5 opacity-70">
+                  {/* Subtle ACM Logo Watermark - top right corner, non-overlapping */}
+                  <div className="absolute top-2.5 right-2.5 flex items-center opacity-30 pointer-events-none z-0">
                     <img
                       src="/images/acm_official_logo.svg"
-                      alt="ACM"
-                      className="h-5 w-auto object-contain filter brightness-0 invert opacity-50"
+                      alt="ACM Watermark"
+                      className="h-4 sm:h-5 w-auto object-contain"
                     />
                   </div>
 
-                  <div>
-                    {/* Status + Duration Row */}
-                    <div className="flex items-center gap-2 mb-3">
-                      {isLive ? (
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500/15 border border-emerald-500/40 text-emerald-400">
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                          LIVE
-                        </span>
-                      ) : isUpcoming ? (
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-500/15 border border-blue-500/40 text-blue-400">
-                          <Clock className="w-3 h-3" />
-                          UPCOMING
-                        </span>
-                      ) : (
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-800 text-slate-500 border border-slate-700">
-                          ENDED
-                        </span>
-                      )}
-                      <span className="text-xs text-slate-500 font-medium">{contest.durationMinutes} min</span>
-                      <div className="ml-auto inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs font-semibold">
-                        <Trophy className="w-3 h-3 text-amber-400" />
-                        {contest.prizePool || 'Certificate'}
+                  <div className="relative z-10 space-y-3">
+                    {/* Status + Duration + Prize Badge Row */}
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        {isLive ? (
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-500/15 border border-emerald-500/40 text-emerald-400 flex-shrink-0">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                            LIVE
+                          </span>
+                        ) : isUpcoming ? (
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-500/15 border border-blue-500/40 text-blue-400 flex-shrink-0">
+                            <Clock className="w-3 h-3" />
+                            UPCOMING
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-800 text-slate-500 border border-slate-700 flex-shrink-0">
+                            ENDED
+                          </span>
+                        )}
+                        <span className="text-xs text-slate-500 font-medium flex-shrink-0">{contest.durationMinutes} min</span>
+                      </div>
+
+                      <div className="inline-flex items-center gap-1 px-2.5 py-1 rounded-md bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs font-semibold max-w-full truncate shadow-sm">
+                        <Trophy className="w-3.5 h-3.5 text-amber-400 flex-shrink-0" />
+                        <span className="truncate">{contest.prizePool || 'Certificate'}</span>
                       </div>
                     </div>
 
                     {/* Title & Description */}
-                    <h2 className="text-base font-bold text-white group-hover:text-blue-400 transition-colors pr-8">
+                    <h2 className="text-base font-bold text-white group-hover:text-blue-400 transition-colors">
                       {contest.title}
                     </h2>
-                    <p className="text-slate-400 text-xs mt-1.5 line-clamp-2 leading-relaxed">
+                    <p className="text-slate-400 text-xs line-clamp-2 leading-relaxed">
                       {contest.description}
                     </p>
 
                     {/* Time Row */}
-                    <div className="flex items-center gap-3 mt-2.5 text-[11px] text-slate-500">
+                    <div className="flex items-center gap-3 pt-1 text-[11px] text-slate-500">
                       <span className="flex items-center gap-1">
                         <Calendar className="w-3 h-3 text-slate-600" />
                         {startDate.toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
@@ -255,7 +259,7 @@ export default function ContestsPage() {
                     </div>
 
                     {/* Meta Stats */}
-                    <div className="grid grid-cols-3 gap-2 mt-4 pt-3 border-t border-slate-800/80 text-xs">
+                    <div className="grid grid-cols-3 gap-2 pt-2 border-t border-slate-800/80 text-xs">
                       <div className="bg-slate-950/60 p-2 rounded-lg border border-slate-800/50 text-center">
                         <div className="text-slate-500 text-[10px]">Problems</div>
                         <div className="font-bold text-slate-300 flex items-center justify-center gap-1 mt-0.5">
@@ -281,7 +285,7 @@ export default function ContestsPage() {
                   </div>
 
                   {/* Action Buttons */}
-                  <div className="flex items-center gap-2.5 mt-4 pt-3 border-t border-slate-800/80">
+                  <div className="flex items-center gap-2.5 mt-4 pt-3 border-t border-slate-800/80 relative z-10">
                     <Link
                       href={`/contests/${contest.slug}`}
                       className="flex-1 text-center py-2 px-3 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold text-xs transition-colors"
@@ -315,12 +319,14 @@ export default function ContestsPage() {
         {/* ── ACM + Vel Tech Footer Strip ── */}
         <div className="mt-8 border-t border-slate-800 pt-5 flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <img src="/images/acm_official_logo.svg" alt="ACM" className="h-6 w-auto filter brightness-0 invert opacity-50" />
+            <div className="h-7 px-2 py-0.5 bg-white rounded-lg flex items-center shadow-sm">
+              <img src="/images/acm_official_logo.svg" alt="ACM" className="h-5 w-auto object-contain" />
+            </div>
             <div className="w-px h-5 bg-slate-700" />
-            <img src="/images/veltech_seal.svg" alt="Vel Tech" className="h-6 w-auto opacity-50" />
-            <span className="text-slate-600 text-[11px]">Vel Tech High Tech ACM Student Chapter</span>
+            <img src="/images/veltech_seal.svg" alt="Vel Tech" className="h-6 w-auto opacity-80" />
+            <span className="text-slate-400 text-[11px]">Vel Tech High Tech ACM Student Chapter</span>
           </div>
-          <div className="text-[11px] text-slate-600 text-center sm:text-right">
+          <div className="text-[11px] text-slate-400 text-center sm:text-right">
             All contests are organized by ACM Student Chapter, Avadi, Chennai · Certified Results
           </div>
         </div>

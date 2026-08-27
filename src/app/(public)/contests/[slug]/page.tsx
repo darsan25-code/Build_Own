@@ -104,7 +104,9 @@ export default function ContestDetailPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <img src="/images/acm_official_logo.svg" alt="ACM" className="h-8 w-auto filter brightness-0 invert" />
+              <div className="h-8 px-2 py-0.5 bg-white rounded-lg flex items-center shadow-sm">
+                <img src="/images/acm_official_logo.svg" alt="ACM Official Logo" className="h-6 w-auto object-contain" />
+              </div>
               <div className="w-px h-6 bg-white/20" />
               <img src="/images/veltech_seal.svg" alt="Vel Tech" className="w-8 h-8 rounded-full bg-white/10 p-0.5" />
               <div>

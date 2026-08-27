@@ -27,7 +27,7 @@ export default async function StudentDashboardPage() {
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
         
         {/* Sidebar Navigation */}
-        <aside className="md:col-span-3 bg-[#0B1E3D] text-slate-200 rounded-2xl p-4 space-y-1.5 shadow-lg h-fit">
+        <aside className="md:col-span-4 lg:col-span-3 bg-[#0B1E3D] text-slate-200 rounded-2xl p-4 space-y-1.5 shadow-lg h-fit">
           <div className="px-3 py-2 border-b border-slate-700/60 mb-2">
             <div className="text-[10px] font-extrabold text-[#00A3E0] uppercase tracking-wider">Student Portal</div>
           </div>
@@ -59,18 +59,10 @@ export default async function StudentDashboardPage() {
             <FileText className="w-4 h-4 text-slate-300" />
             <span>Publications</span>
           </Link>
-          <Link href="/student/certificates" className="acm-sidebar-link hover:bg-white/10">
-            <Award className="w-4 h-4 text-slate-300" />
-            <span>Certificates</span>
-          </Link>
-          <Link href="/student/profile" className="acm-sidebar-link hover:bg-white/10">
-            <Settings className="w-4 h-4 text-slate-300" />
-            <span>Settings & Profile</span>
-          </Link>
         </aside>
 
         {/* Main Content Area */}
-        <main className="md:col-span-9 space-y-6">
+        <main className="md:col-span-8 lg:col-span-9 space-y-6">
           
           {/* Header Banner */}
           <div className="bg-white border border-slate-200/80 rounded-2xl p-5 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
