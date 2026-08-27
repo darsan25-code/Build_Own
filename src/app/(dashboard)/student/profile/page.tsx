@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 import { getCurrentUser } from '@/server/security/auth';
-import { Edit3, CheckCircle2, User, Mail, Building, MapPin, Calendar, ShieldCheck } from 'lucide-react';
+import { CheckCircle2, User, Mail, Building, MapPin, Calendar, ShieldCheck } from 'lucide-react';
 
 export default async function ProfilePage() {
   const user = await getCurrentUser();
@@ -8,16 +8,10 @@ export default async function ProfilePage() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-6">
-      {/* Header Inspired by Screen 10 */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">My Profile</h1>
-          <p className="text-xs text-slate-500 mt-0.5">Manage your personal details and academic affiliation.</p>
-        </div>
-        <button className="px-4 py-2 border border-slate-300 rounded-lg text-xs font-semibold text-slate-700 hover:bg-slate-50 flex items-center gap-1.5 transition-colors">
-          <Edit3 className="w-3.5 h-3.5 text-[#005596]" />
-          <span>Edit Profile</span>
-        </button>
+      {/* Header */}
+      <div>
+        <h1 className="text-2xl font-bold text-slate-900 tracking-tight">My Profile</h1>
+        <p className="text-xs text-slate-500 mt-0.5">Manage your personal details and academic affiliation.</p>
       </div>
 
       {/* Main Profile Card Inspired by Screen 10 */}

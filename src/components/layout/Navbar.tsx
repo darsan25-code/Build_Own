@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { 
-  Search, User, LogOut, LayoutDashboard, Award, Settings, 
+  Search, User, LogOut, LayoutDashboard, Award, 
   Menu, X, ChevronDown, CheckCircle2 
 } from 'lucide-react';
 import { useState, useEffect, useRef } from 'react';
@@ -195,15 +195,7 @@ export function Navbar() {
                         className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-slate-700 hover:text-[#005596] hover:bg-blue-50/80 rounded-xl transition-colors"
                       >
                         <User className="w-4 h-4 text-[#005596]" />
-                        <span>View Profile</span>
-                      </Link>
-
-                      <Link
-                        href="/student/profile"
-                        className="flex items-center gap-2.5 px-3 py-2 text-xs font-semibold text-slate-700 hover:text-[#005596] hover:bg-blue-50/80 rounded-xl transition-colors"
-                      >
-                        <Settings className="w-4 h-4 text-[#005596]" />
-                        <span>Settings &amp; Profile</span>
+                        <span>Profile &amp; Settings</span>
                       </Link>
 
                       <Link
@@ -298,7 +290,7 @@ export function Navbar() {
                   className="flex items-center gap-2 px-3 py-2.5 bg-slate-50 text-slate-700 border border-slate-200 rounded-xl text-xs font-semibold hover:bg-blue-50 transition-colors"
                 >
                   <User className="w-4 h-4 text-[#005596]" />
-                  <span>Profile</span>
+                  <span>Profile &amp; Settings</span>
                 </Link>
 
                 <Link
