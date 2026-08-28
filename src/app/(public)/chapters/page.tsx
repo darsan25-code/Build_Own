@@ -4,6 +4,7 @@ import {
   Sparkles, Trophy, Zap, BookOpen, Award, Briefcase, Compass
 } from 'lucide-react';
 import { db } from '@/server/db/client';
+import DigitalHandsHeroVisual from '@/components/chapters/DigitalHandsHeroVisual';
 
 export default async function ChaptersPage() {
   const chapters = await db.chapter.findMany({
@@ -15,49 +16,49 @@ export default async function ChaptersPage() {
   });
 
   return (
-    <div className="space-y-12 sm:space-y-16 pb-16 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 animate-fade-in">
+    <div className="space-y-12 sm:space-y-16 pb-16 w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 animate-fade-in">
       
       {/* =========================================================================
-          1. CHAPTERS HERO SECTION — Midnight Navy & Electric Cyan Ecosystem
+          1. CHAPTERS HERO SECTION — Cinematic Digital Connection Ecosystem
          ========================================================================= */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[#050B1A] via-[#07152D] to-[#082B52] text-white rounded-2xl sm:rounded-3xl p-6 sm:p-10 lg:p-12 shadow-2xl border border-[#082B52] my-2">
+      <section className="relative overflow-hidden bg-gradient-to-br from-[#050B1A] via-[#07152D] to-[#082B52] text-white rounded-3xl p-6 sm:p-10 lg:p-12 shadow-2xl border border-[#082B52] my-3 min-h-[560px] sm:min-h-[600px] lg:min-h-[640px] flex items-center">
         
-        {/* Subtle Background Glow Halos */}
-        <div className="absolute top-[-10%] right-[5%] w-[450px] h-[450px] bg-[#00AEEF]/15 rounded-full blur-[140px] pointer-events-none select-none" />
-        <div className="absolute bottom-[-10%] left-[-5%] w-[400px] h-[400px] bg-blue-600/15 rounded-full blur-[130px] pointer-events-none select-none" />
+        {/* Background Radial Volumetric Light Glows */}
+        <div className="absolute top-1/2 right-[12%] -translate-y-1/2 w-[450px] sm:w-[580px] h-[450px] sm:h-[580px] bg-[#00AEEF]/16 rounded-full blur-[140px] pointer-events-none select-none" />
+        <div className="absolute bottom-[-15%] left-[-5%] w-[400px] h-[400px] bg-blue-600/12 rounded-full blur-[140px] pointer-events-none select-none" />
         
-        {/* IDE Pattern Grid */}
+        {/* Ambient Grid Overlay */}
         <div className="absolute inset-0 acm-pattern-grid opacity-15 pointer-events-none select-none" />
 
-        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+        <div className="relative z-10 w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
-          {/* Left Hero Content */}
-          <div className="lg:col-span-7 space-y-4 text-left">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-mono font-bold bg-[#00AEEF]/10 text-[#16C7F3] border border-[#00AEEF]/30 backdrop-blur-md uppercase tracking-wider shadow-sm">
+          {/* Left Side Content (50% on Desktop) */}
+          <div className="lg:col-span-6 space-y-6 text-left">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-mono font-bold bg-[#00AEEF]/10 text-[#16C7F3] border border-[#00AEEF]/30 backdrop-blur-md uppercase tracking-wider shadow-sm">
               <Sparkles className="w-3.5 h-3.5 text-amber-300 flex-shrink-0" />
               <span>ACM GLOBAL CHAPTER NETWORK</span>
             </div>
             
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.12] text-white">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-[1.1] text-white">
               Explore ACM <br />
               <span className="text-[#00AEEF]">Student Chapters</span>
             </h1>
             
-            <p className="text-xs sm:text-sm lg:text-base text-slate-300 leading-relaxed max-w-xl font-normal">
+            <p className="text-sm sm:text-base lg:text-lg text-slate-300 leading-relaxed max-w-xl font-normal">
               Connect with chapter officers, attend local and global workshops, and collaborate across universities.
             </p>
             
-            <div className="flex flex-wrap items-center gap-3 pt-2">
+            <div className="flex flex-wrap items-center gap-3.5 pt-2">
               <a
                 href="#find-chapter"
-                className="px-6 py-3 bg-[#00AEEF] hover:bg-[#0096ce] text-white font-extrabold text-xs sm:text-sm rounded-xl shadow-lg shadow-cyan-500/20 transition-all active:scale-[0.98] cursor-pointer flex items-center gap-2 min-h-[44px]"
+                className="w-full sm:w-auto px-7 py-3.5 bg-[#00AEEF] hover:bg-[#0096ce] text-white font-extrabold text-sm rounded-xl shadow-lg shadow-cyan-500/25 hover:shadow-cyan-500/40 hover:-translate-y-0.5 transition-all duration-200 active:scale-[0.98] cursor-pointer flex items-center justify-center gap-2.5 h-[50px]"
               >
                 <Compass className="w-4 h-4 text-white flex-shrink-0" />
                 <span>Find a Chapter</span>
               </a>
               <a
                 href="#start-chapter"
-                className="px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-extrabold text-xs sm:text-sm rounded-xl border border-white/20 backdrop-blur-sm transition-all active:scale-[0.98] cursor-pointer flex items-center gap-2 min-h-[44px]"
+                className="w-full sm:w-auto px-7 py-3.5 bg-white/10 hover:bg-white/20 text-white font-extrabold text-sm rounded-xl border border-white/20 hover:border-white/40 backdrop-blur-md hover:-translate-y-0.5 transition-all duration-200 active:scale-[0.98] cursor-pointer flex items-center justify-center gap-2.5 h-[50px]"
               >
                 <Sparkles className="w-4 h-4 text-[#16C7F3] flex-shrink-0" />
                 <span>Start a Chapter</span>
@@ -65,21 +66,9 @@ export default async function ChaptersPage() {
             </div>
           </div>
 
-          {/* Right Hero Visualization: Refined ACM Global Network Core */}
-          <div className="lg:col-span-5 relative flex items-center justify-center pointer-events-none opacity-90 min-h-[240px] sm:min-h-[280px]">
-            <div className="relative w-60 sm:w-72 lg:w-80 h-60 sm:h-72 lg:h-80 flex items-center justify-center">
-              <svg className="absolute inset-0 w-full h-full text-cyan-400" viewBox="0 0 400 400" fill="none">
-                <ellipse cx="200" cy="200" rx="180" ry="75" stroke="currentColor" strokeWidth="1.5" strokeDasharray="10 6" className="opacity-60 animate-spin-slow" />
-                <ellipse cx="200" cy="200" rx="150" ry="150" stroke="#00AEEF" strokeWidth="1" strokeDasharray="4 8" className="opacity-45 animate-spin-reverse" />
-              </svg>
-
-              {/* Central Core */}
-              <div className="w-28 sm:w-32 h-28 sm:h-32 rounded-full bg-gradient-to-br from-cyan-400/25 via-blue-600/20 to-indigo-950/40 border border-cyan-300/60 shadow-[0_0_50px_rgba(0,240,255,0.35)] flex flex-col items-center justify-center p-3 text-center backdrop-blur-sm z-10">
-                <Globe className="w-7 h-7 text-cyan-300 mb-1 animate-pulse" />
-                <span className="text-[10px] font-mono font-extrabold text-cyan-200 tracking-wider">ACM GLOBAL</span>
-                <span className="text-[9px] text-slate-300">CORE MATRIX</span>
-              </div>
-            </div>
+          {/* Right Side Visual (50% on Desktop): The Exact Uploaded Digital Hands Connection Visual */}
+          <div className="lg:col-span-6 relative flex items-center justify-center w-full min-h-[320px] sm:min-h-[400px] lg:min-h-[480px]">
+            <DigitalHandsHeroVisual />
           </div>
         </div>
       </section>
@@ -87,7 +76,7 @@ export default async function ChaptersPage() {
       {/* =========================================================================
           2. THE GLOBAL NETWORK (STATISTICS TRANSITION STRIP)
          ========================================================================= */}
-      <section className="w-full space-y-3">
+      <section className="w-full space-y-3 pt-2">
         <div className="text-center space-y-1">
           <span className="text-xs font-mono font-bold text-[#00AEEF] uppercase tracking-widest">THE GLOBAL NETWORK</span>
           <h2 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight">One Community. Countless Possibilities.</h2>
@@ -252,9 +241,9 @@ export default async function ChaptersPage() {
          ========================================================================= */}
       <section className="w-full space-y-5">
         <div className="space-y-1">
-          <span className="text-xs font-mono font-bold text-[#00AEEF] uppercase tracking-widest">GROW WITH ACM</span>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">More Than a Chapter.</h2>
-          <p className="text-xs sm:text-sm text-slate-300 max-w-xl">Empowering student developers, researchers, and tech leaders worldwide.</p>
+          <span className="text-xs font-mono font-bold text-[#008FD5] uppercase tracking-widest">GROW WITH ACM</span>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#0F172A] tracking-tight">More Than a Chapter.</h2>
+          <p className="text-xs sm:text-sm text-[#475569] max-w-xl font-normal opacity-100">Empowering student developers, researchers, and tech leaders worldwide.</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">

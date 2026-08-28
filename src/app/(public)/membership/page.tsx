@@ -6,11 +6,11 @@ export default function MembershipPage() {
     <div className="space-y-12 sm:space-y-16 pb-16 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 animate-fade-in">
       
       {/* Hero Header Banner */}
-      <section className="bg-gradient-to-br from-slate-950 via-[#071225] to-[#0B3B78] border border-slate-800/90 rounded-3xl p-6 sm:p-12 shadow-2xl relative overflow-hidden text-white my-2">
+      <section className="bg-gradient-to-br from-[#050B1A] via-[#07173A] to-[#0A2147] border border-[#123B66] rounded-3xl p-6 sm:p-12 shadow-2xl relative overflow-hidden text-white my-2">
         <div className="absolute top-[-15%] right-[-5%] w-[450px] h-[450px] bg-cyan-500/15 rounded-full blur-[140px] pointer-events-none" />
         
         <div className="relative z-10 space-y-4 max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono font-bold bg-cyan-500/10 text-cyan-300 border border-cyan-400/30 backdrop-blur-md uppercase tracking-wider">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono font-bold bg-[#00AEEF]/10 text-cyan-300 border border-[#00AEEF]/30 backdrop-blur-md uppercase tracking-wider">
             <Sparkles className="w-3.5 h-3.5 text-amber-300 flex-shrink-0" />
             <span>GLOBAL COMPUTING SOCIETY</span>
           </div>
@@ -30,8 +30,8 @@ export default function MembershipPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
           
           {/* Student Membership */}
-          <div className="bg-gradient-to-b from-slate-900/90 to-slate-950/90 border-2 border-cyan-400/60 rounded-3xl p-6 sm:p-7 shadow-2xl shadow-cyan-500/10 flex flex-col justify-between relative overflow-hidden group">
-            <div className="absolute top-0 right-0 bg-[#00A3E0] text-white text-[10px] font-mono font-extrabold uppercase px-3 py-1 rounded-bl-xl shadow-md">
+          <div className="bg-gradient-to-b from-[#071A3A] to-[#0A2147] border-2 border-[#00AEEF]/60 rounded-3xl p-6 sm:p-7 shadow-2xl shadow-cyan-500/10 flex flex-col justify-between relative overflow-hidden group">
+            <div className="absolute top-0 right-0 bg-[#00AEEF] text-white text-[10px] font-mono font-extrabold uppercase px-3 py-1 rounded-bl-xl shadow-md">
               Most Popular
             </div>
 
@@ -46,7 +46,7 @@ export default function MembershipPage() {
                 $19 <span className="text-xs text-slate-400 font-normal">/ year</span>
               </div>
 
-              <ul className="space-y-3 text-xs text-slate-300 pt-2 border-t border-slate-800">
+              <ul className="space-y-3 text-xs text-slate-300 pt-2 border-t border-[#123B66]">
                 <li className="flex items-center gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
                   <span>Full access to ACM Learning Center &amp; Skill Paths</span>
@@ -69,7 +69,7 @@ export default function MembershipPage() {
             <div className="pt-6">
               <Link
                 href="/signup"
-                className="block text-center py-3 bg-[#00A3E0] hover:bg-[#008cc0] text-white text-xs font-extrabold rounded-xl shadow-lg shadow-cyan-500/20 active:scale-[0.98] transition-all min-h-[44px]"
+                className="block text-center py-3 bg-[#00AEEF] hover:bg-[#008cc0] text-white text-xs font-extrabold rounded-xl shadow-lg shadow-cyan-500/20 active:scale-[0.98] transition-all min-h-[44px]"
               >
                 Join as Student
               </Link>
@@ -77,10 +77,10 @@ export default function MembershipPage() {
           </div>
 
           {/* Professional Membership */}
-          <div className="bg-slate-900/80 backdrop-blur-md border border-slate-800/80 rounded-3xl p-6 sm:p-7 shadow-xl flex flex-col justify-between">
+          <div className="bg-[#071A3A] backdrop-blur-md border border-[#123B66] rounded-3xl p-6 sm:p-7 shadow-xl flex flex-col justify-between">
             <div className="space-y-5">
               <div>
-                <span className="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider">Professional Tier</span>
+                <span className="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider">Professional Tier</span>
                 <h3 className="text-2xl font-extrabold text-white mt-1">Professional Membership</h3>
                 <p className="text-xs text-slate-300 mt-1 leading-relaxed">For industry engineers, researchers, and computing practitioners.</p>
               </div>
@@ -89,7 +89,7 @@ export default function MembershipPage() {
                 $99 <span className="text-xs text-slate-400 font-normal">/ year</span>
               </div>
 
-              <ul className="space-y-3 text-xs text-slate-300 pt-2 border-t border-slate-800">
+              <ul className="space-y-3 text-xs text-slate-300 pt-2 border-t border-[#123B66]">
                 <li className="flex items-center gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
                   <span>Full Communications of the ACM subscription</span>
@@ -108,7 +108,7 @@ export default function MembershipPage() {
             <div className="pt-6">
               <Link
                 href="/signup"
-                className="block text-center py-3 bg-slate-800 hover:bg-slate-700 text-white text-xs font-extrabold rounded-xl border border-slate-700 active:scale-[0.98] transition-all min-h-[44px]"
+                className="block text-center py-3 bg-[#0A2147] hover:bg-[#0B254F] text-white text-xs font-extrabold rounded-xl border border-[#123B66] active:scale-[0.98] transition-all min-h-[44px]"
               >
                 Join as Professional
               </Link>
@@ -116,10 +116,10 @@ export default function MembershipPage() {
           </div>
 
           {/* Academic Tier */}
-          <div className="bg-slate-900/80 backdrop-blur-md border border-slate-800/80 rounded-3xl p-6 sm:p-7 shadow-xl flex flex-col justify-between">
+          <div className="bg-[#071A3A] backdrop-blur-md border border-[#123B66] rounded-3xl p-6 sm:p-7 shadow-xl flex flex-col justify-between">
             <div className="space-y-5">
               <div>
-                <span className="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider">Academic Tier</span>
+                <span className="text-xs font-mono font-bold text-slate-300 uppercase tracking-wider">Academic Tier</span>
                 <h3 className="text-2xl font-extrabold text-white mt-1">Faculty &amp; Educator</h3>
                 <p className="text-xs text-slate-300 mt-1 leading-relaxed">For professors, researchers, and chapter faculty advisors.</p>
               </div>
@@ -128,7 +128,7 @@ export default function MembershipPage() {
                 $49 <span className="text-xs text-slate-400 font-normal">/ year</span>
               </div>
 
-              <ul className="space-y-3 text-xs text-slate-300 pt-2 border-t border-slate-800">
+              <ul className="space-y-3 text-xs text-slate-300 pt-2 border-t border-[#123B66]">
                 <li className="flex items-center gap-2.5">
                   <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0" />
                   <span>Faculty sponsor rights for Student Chapters</span>
@@ -147,7 +147,7 @@ export default function MembershipPage() {
             <div className="pt-6">
               <Link
                 href="/signup"
-                className="block text-center py-3 bg-slate-800 hover:bg-slate-700 text-white text-xs font-extrabold rounded-xl border border-slate-700 active:scale-[0.98] transition-all min-h-[44px]"
+                className="block text-center py-3 bg-[#0A2147] hover:bg-[#0B254F] text-white text-xs font-extrabold rounded-xl border border-[#123B66] active:scale-[0.98] transition-all min-h-[44px]"
               >
                 Join as Faculty
               </Link>
