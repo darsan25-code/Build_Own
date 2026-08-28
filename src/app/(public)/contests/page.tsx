@@ -15,6 +15,7 @@ import {
   Terminal,
   Shield,
 } from 'lucide-react';
+import ContestBackgroundDecoration from '@/components/contests/ContestBackgroundDecoration';
 
 interface Contest {
   id: string;
@@ -55,113 +56,11 @@ export default function ContestsPage() {
   const liveCount = contests.filter(c => c.status === 'LIVE').length;
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 pb-10 relative overflow-hidden">
+    <div className="min-h-screen bg-[#030712] text-slate-100 pb-12 relative overflow-hidden">
 
-      {/* ── HOLOGRAPHIC COMPETITIVE PROGRAMMING ARENA VISUAL BACKGROUND (z-0, pointer-events-none) ── */}
-      <div className="absolute inset-0 pointer-events-none select-none overflow-hidden z-0" aria-hidden="true">
-        
-        {/* 1. Deep Atmospheric Glow Halos */}
-        <div className="absolute top-10 right-1/4 w-[550px] h-[550px] bg-cyan-500/15 rounded-full blur-[140px]" />
-        <div className="absolute top-1/3 left-1/4 w-[600px] h-[600px] bg-[#005596]/15 rounded-full blur-[150px]" />
-        <div className="absolute bottom-10 right-1/3 w-[450px] h-[450px] bg-blue-600/10 rounded-full blur-[120px]" />
+      {/* ── HOLOGRAPHIC COMPETITIVE PROGRAMMING ARENA BACKGROUND DECORATION LAYER ── */}
+      <ContestBackgroundDecoration />
 
-        {/* 2. IDE Editor Fine Grid Canvas */}
-        <div className="absolute inset-0 acm-pattern-grid opacity-[0.05]" />
-
-        {/* 3. Top-Left Faint Code Window Snippet (Inspired by Reference Image) */}
-        <div className="hidden lg:block absolute top-28 left-[4%] w-72 p-3 rounded-xl bg-slate-900/40 border border-blue-500/20 backdrop-blur-[2px] opacity-40 shadow-xl">
-          <div className="flex items-center gap-1.5 mb-2 pb-1.5 border-b border-slate-800/60">
-            <div className="w-2 h-2 rounded-full bg-rose-500/60" />
-            <div className="w-2 h-2 rounded-full bg-amber-500/60" />
-            <div className="w-2 h-2 rounded-full bg-emerald-500/60" />
-            <span className="text-[10px] font-mono text-slate-400 ml-2">code.js</span>
-          </div>
-          <pre className="font-mono text-[10px] text-sky-300/70 leading-relaxed overflow-hidden">
-            {`void solve() {
-  int n; cin >> n;
-  vector<int> a(n);
-  for(int i=0; i<n; i++) {
-    cin >> a[i];
-  }
-  sort(a.begin(), a.end());
-  return 0;
-}`}
-          </pre>
-        </div>
-
-        {/* 4. Right-Side Holographic Spherical Network Core (Behind Stat Cards) */}
-        <div className="absolute top-16 right-[-2%] sm:right-[5%] lg:right-[10%] w-[420px] sm:w-[520px] h-[420px] sm:h-[520px] pointer-events-none opacity-60 lg:opacity-80">
-          {/* Holographic Glowing Base Pedestal */}
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-80 h-20 bg-gradient-to-t from-cyan-500/30 via-blue-600/10 to-transparent rounded-[100%] border border-cyan-400/40 blur-[1px] shadow-[0_0_40px_rgba(0,163,224,0.3)]" />
-          <div className="absolute bottom-12 left-1/2 -translate-x-1/2 w-64 h-12 rounded-[100%] border border-sky-300/40" />
-
-          {/* Central Holographic Core Sphere */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 rounded-full bg-gradient-to-tr from-cyan-500/40 via-blue-600/20 to-sky-300/30 border border-cyan-300/50 shadow-[0_0_60px_rgba(0,163,224,0.5)] flex items-center justify-center">
-            <div className="w-32 h-32 rounded-full border border-cyan-200/40 border-dashed animate-spin-slow" />
-          </div>
-
-          {/* Concentric Rotating Orbital Rings */}
-          <svg className="w-full h-full text-cyan-400" viewBox="0 0 500 500" fill="none">
-            <ellipse cx="250" cy="250" rx="210" ry="80" stroke="currentColor" strokeWidth="1.5" strokeDasharray="8 6" className="opacity-70" />
-            <ellipse cx="250" cy="250" rx="190" ry="190" stroke="currentColor" strokeWidth="1" strokeDasharray="4 4" className="opacity-40 animate-spin-slow" />
-            <ellipse cx="250" cy="250" rx="140" ry="220" stroke="currentColor" strokeWidth="1" className="opacity-30" />
-            <path d="M 50 250 H 450 M 250 50 V 450" stroke="currentColor" strokeWidth="1" opacity="0.25" />
-
-            {/* Glowing Nodes on Orbit */}
-            <circle cx="250" cy="60" r="5" fill="#00A3E0" className="animate-pulse" />
-            <circle cx="440" cy="250" r="5" fill="#10B981" />
-            <circle cx="250" cy="440" r="5" fill="#38BDF8" />
-            <circle cx="60" cy="250" r="5" fill="#F59E0B" />
-          </svg>
-        </div>
-
-        {/* 5. Horizontal Circuit Data Bus Across Contest Filters & Cards */}
-        <div className="absolute inset-0 w-full h-full opacity-30">
-          <svg className="w-full h-full text-cyan-400" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="bus-grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#00A3E0" stopOpacity="0.8" />
-                <stop offset="50%" stopColor="#005596" stopOpacity="0.3" />
-                <stop offset="100%" stopColor="#00A3E0" stopOpacity="0.7" />
-              </linearGradient>
-            </defs>
-
-            {/* Circuit traces */}
-            <path d="M 0 160 H 320 L 380 220 H 940 L 1000 160 H 1920" stroke="url(#bus-grad)" strokeWidth="1.5" fill="none" strokeDasharray="6 4" />
-            <path d="M 60 0 V 440 L 130 510 V 1100" stroke="currentColor" strokeWidth="1" opacity="0.25" fill="none" />
-            <path d="M 1860 0 V 540 L 1790 610 V 1150" stroke="currentColor" strokeWidth="1" opacity="0.25" fill="none" />
-            <path d="M 220 700 H 520 L 580 760 H 1300" stroke="currentColor" strokeWidth="1" opacity="0.2" strokeDasharray="4 4" fill="none" />
-
-            {/* Micro Junction Nodes */}
-            <circle cx="380" cy="220" r="4" fill="#00A3E0" className="animate-pulse" />
-            <circle cx="1000" cy="160" r="4" fill="#10B981" />
-            <circle cx="130" cy="510" r="4" fill="#38BDF8" />
-            <circle cx="1790" cy="610" r="4" fill="#00A3E0" className="animate-pulse" />
-          </svg>
-        </div>
-
-        {/* 6. Binary Data Stream Column & Ambient Micro Syntax Tokens */}
-        <div className="hidden lg:block">
-          {/* Binary Stream */}
-          <div className="absolute top-48 right-[3%] font-mono text-[10px] text-cyan-400/30 font-bold leading-tight select-none text-right">
-            01010<br />10101<br />00110<br />11001
-          </div>
-
-          {/* Micro Code Tokens */}
-          <div className="absolute top-32 left-[18%] font-mono text-xs font-extrabold text-cyan-400/40 tracking-widest select-none">
-            &lt;/&gt;
-          </div>
-          <div className="absolute top-80 right-[22%] font-mono text-xs font-extrabold text-blue-400/40 tracking-widest select-none">
-            { '{ }' }
-          </div>
-          <div className="absolute top-[48%] left-[2%] font-mono text-[11px] font-extrabold text-emerald-400/30 tracking-wider select-none">
-            0101 :: fn()
-          </div>
-          <div className="absolute top-[62%] right-[3%] font-mono text-[11px] font-extrabold text-amber-400/30 tracking-widest select-none">
-            =&gt; { '[ ]' }
-          </div>
-        </div>
-      </div>
 
       {/* ── Institutional Header Banner (relative z-10) ── */}
       <div className="relative z-10 bg-gradient-to-r from-[#0B1E3D] via-[#003B6E] to-[#005596] border-b border-blue-900/60 shadow-md">

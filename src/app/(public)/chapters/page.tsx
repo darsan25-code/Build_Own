@@ -1,5 +1,8 @@
 import Link from 'next/link';
-import { Globe, Users, Building, Search, PlusCircle, ArrowRight, MapPin, Sparkles } from 'lucide-react';
+import { 
+  Globe, Users, Building, Search, PlusCircle, ArrowRight, MapPin, 
+  Sparkles, Trophy, Zap, BookOpen, Award, Briefcase, Compass
+} from 'lucide-react';
 import { db } from '@/server/db/client';
 
 export default async function ChaptersPage() {
@@ -12,237 +15,364 @@ export default async function ChaptersPage() {
   });
 
   return (
-    <div className="space-y-8 sm:space-y-10 pb-16 animate-fade-in w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="space-y-12 sm:space-y-16 pb-16 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 animate-fade-in">
       
-      {/* 1. HERO / TOP BLUE SECTION — GLOBAL COMPUTING NETWORK */}
-      <section className="relative overflow-hidden bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-[#004B87] via-[#002548] to-[#001224] text-white rounded-3xl p-6 sm:p-10 lg:p-12 shadow-2xl border border-blue-400/20 my-2">
-        {/* Subtle Background Circuit Grid */}
-        <div className="absolute inset-0 acm-pattern-grid opacity-10 pointer-events-none" />
-        <div className="absolute -right-24 -top-24 w-96 h-96 bg-sky-500/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -left-24 -bottom-24 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
+      {/* =========================================================================
+          1. CHAPTERS HERO SECTION — Midnight Navy & Electric Cyan Ecosystem
+         ========================================================================= */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-[#050B1A] via-[#07152D] to-[#082B52] text-white rounded-2xl sm:rounded-3xl p-6 sm:p-10 lg:p-12 shadow-2xl border border-[#082B52] my-2">
+        
+        {/* Subtle Background Glow Halos */}
+        <div className="absolute top-[-10%] right-[5%] w-[450px] h-[450px] bg-[#00AEEF]/15 rounded-full blur-[140px] pointer-events-none select-none" />
+        <div className="absolute bottom-[-10%] left-[-5%] w-[400px] h-[400px] bg-blue-600/15 rounded-full blur-[130px] pointer-events-none select-none" />
+        
+        {/* IDE Pattern Grid */}
+        <div className="absolute inset-0 acm-pattern-grid opacity-15 pointer-events-none select-none" />
 
-        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          {/* Left Content Column */}
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+          
+          {/* Left Hero Content */}
           <div className="lg:col-span-7 space-y-4 text-left">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-extrabold bg-sky-400/15 text-sky-200 border border-sky-300/30 backdrop-blur-md uppercase tracking-wider shadow-inner">
-              <Sparkles className="w-3.5 h-3.5 text-sky-300 animate-pulse" />
-              <span>ACM Global Chapter Ecosystem</span>
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-mono font-bold bg-[#00AEEF]/10 text-[#16C7F3] border border-[#00AEEF]/30 backdrop-blur-md uppercase tracking-wider shadow-sm">
+              <Sparkles className="w-3.5 h-3.5 text-amber-300 flex-shrink-0" />
+              <span>ACM GLOBAL CHAPTER NETWORK</span>
             </div>
             
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight text-white drop-shadow-xs">
-              ACM Student Chapters
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-[1.12] text-white">
+              Explore ACM <br />
+              <span className="text-[#00AEEF]">Student Chapters</span>
             </h1>
             
-            <p className="text-sm sm:text-base text-blue-100/90 leading-relaxed max-w-xl font-normal">
-              Local communities. Global impact. Join a chapter or start a new one at your institution.
+            <p className="text-xs sm:text-sm lg:text-base text-slate-300 leading-relaxed max-w-xl font-normal">
+              Connect with chapter officers, attend local and global workshops, and collaborate across universities.
             </p>
             
-            <div className="flex flex-wrap items-center gap-3.5 pt-3">
+            <div className="flex flex-wrap items-center gap-3 pt-2">
               <a
                 href="#find-chapter"
-                className="px-6 py-3.5 bg-white text-[#005596] font-extrabold text-xs sm:text-sm rounded-xl shadow-lg hover:bg-blue-50 transition-all active:scale-[0.98] cursor-pointer"
+                className="px-6 py-3 bg-[#00AEEF] hover:bg-[#0096ce] text-white font-extrabold text-xs sm:text-sm rounded-xl shadow-lg shadow-cyan-500/20 transition-all active:scale-[0.98] cursor-pointer flex items-center gap-2 min-h-[44px]"
               >
-                Find a Chapter
+                <Compass className="w-4 h-4 text-white flex-shrink-0" />
+                <span>Find a Chapter</span>
               </a>
               <a
                 href="#start-chapter"
-                className="px-6 py-3.5 border border-white/40 text-white font-extrabold text-xs sm:text-sm rounded-xl hover:bg-white/10 transition-all active:scale-[0.98] cursor-pointer"
+                className="px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-extrabold text-xs sm:text-sm rounded-xl border border-white/20 backdrop-blur-sm transition-all active:scale-[0.98] cursor-pointer flex items-center gap-2 min-h-[44px]"
               >
-                Start a Chapter
+                <Sparkles className="w-4 h-4 text-[#16C7F3] flex-shrink-0" />
+                <span>Start a Chapter</span>
               </a>
             </div>
           </div>
 
-          {/* Right Decorative Global Computing Network Graphic Column */}
-          <div className="lg:col-span-5 hidden lg:flex justify-center items-center relative min-h-[260px]">
-            <div className="relative w-full max-w-sm aspect-square flex items-center justify-center">
-              
-              {/* Floating Technical UI Badges */}
-              <div className="absolute top-2 left-4 px-2.5 py-1 rounded-lg bg-sky-500/20 text-sky-200 border border-sky-300/30 text-[10.5px] font-mono font-extrabold shadow-sm animate-bounce" style={{ animationDuration: '4s' }}>
-                CS :: AI
-              </div>
-              <div className="absolute top-4 right-4 px-2.5 py-1 rounded-lg bg-blue-500/20 text-blue-200 border border-blue-300/30 text-[10.5px] font-mono font-extrabold shadow-sm animate-bounce" style={{ animationDuration: '5s' }}>
-                ACM :: 01
-              </div>
-              <div className="absolute bottom-4 left-2 px-2.5 py-1 rounded-lg bg-emerald-500/20 text-emerald-200 border border-emerald-300/30 text-[10.5px] font-mono font-extrabold shadow-sm animate-bounce" style={{ animationDuration: '4.5s' }}>
-                DSA :: WEB
-              </div>
-              <div className="absolute bottom-2 right-2 px-2.5 py-1 rounded-lg bg-cyan-500/20 text-cyan-200 border border-cyan-300/30 text-[10.5px] font-mono font-extrabold shadow-sm animate-bounce" style={{ animationDuration: '5.5s' }}>
-                1,000+ Nodes
-              </div>
-
-              {/* Glowing Concentric Orbits & Pulse Rings */}
-              <div className="absolute inset-0 rounded-full border border-sky-400/20 animate-pulse" />
-              <div className="absolute inset-6 rounded-full border border-dashed border-sky-300/30 animate-spin" style={{ animationDuration: '30s' }} />
-              <div className="absolute inset-12 rounded-full border border-sky-400/15" />
-
-              {/* Layered SVG Computing Network Graph */}
-              <svg className="w-full h-full text-sky-300/50" viewBox="0 0 200 200" fill="none">
-                <line x1="100" y1="35" x2="45" y2="85" stroke="currentColor" strokeWidth="1.5" strokeDasharray="4 3" />
-                <line x1="100" y1="35" x2="155" y2="85" stroke="currentColor" strokeWidth="1.5" />
-                <line x1="45" y1="85" x2="65" y2="155" stroke="currentColor" strokeWidth="1.5" />
-                <line x1="155" y1="85" x2="135" y2="155" stroke="currentColor" strokeWidth="1.5" strokeDasharray="4 3" />
-                <line x1="65" y1="155" x2="135" y2="155" stroke="currentColor" strokeWidth="1.5" />
-                <line x1="45" y1="85" x2="155" y2="85" stroke="currentColor" strokeWidth="1" strokeDasharray="2 2" />
-                <line x1="100" y1="35" x2="100" y2="100" stroke="currentColor" strokeWidth="1.5" />
-                <line x1="100" y1="100" x2="65" y2="155" stroke="currentColor" strokeWidth="1" />
-                <line x1="100" y1="100" x2="135" y2="155" stroke="currentColor" strokeWidth="1" />
-                <line x1="100" y1="100" x2="45" y2="85" stroke="currentColor" strokeWidth="1" strokeDasharray="3 3" />
-                <line x1="100" y1="100" x2="155" y2="85" stroke="currentColor" strokeWidth="1" strokeDasharray="3 3" />
-
-                <circle cx="100" cy="35" r="6" fill="#00A3E0" />
-                <circle cx="45" cy="85" r="5" fill="#38BDF8" />
-                <circle cx="155" cy="85" r="5" fill="#38BDF8" />
-                <circle cx="100" cy="100" r="7" fill="#ffffff" />
-                <circle cx="65" cy="155" r="5" fill="#38BDF8" />
-                <circle cx="135" cy="155" r="5" fill="#38BDF8" />
-                <circle cx="30" cy="120" r="3" fill="#00A3E0" />
-                <circle cx="170" cy="120" r="3" fill="#00A3E0" />
+          {/* Right Hero Visualization: Refined ACM Global Network Core */}
+          <div className="lg:col-span-5 relative flex items-center justify-center pointer-events-none opacity-90 min-h-[240px] sm:min-h-[280px]">
+            <div className="relative w-60 sm:w-72 lg:w-80 h-60 sm:h-72 lg:h-80 flex items-center justify-center">
+              <svg className="absolute inset-0 w-full h-full text-cyan-400" viewBox="0 0 400 400" fill="none">
+                <ellipse cx="200" cy="200" rx="180" ry="75" stroke="currentColor" strokeWidth="1.5" strokeDasharray="10 6" className="opacity-60 animate-spin-slow" />
+                <ellipse cx="200" cy="200" rx="150" ry="150" stroke="#00AEEF" strokeWidth="1" strokeDasharray="4 8" className="opacity-45 animate-spin-reverse" />
               </svg>
 
-              {/* Central Globe Core Emblem */}
-              <div className="absolute w-20 h-20 rounded-2xl bg-white/10 backdrop-blur-md border border-white/25 shadow-2xl flex flex-col items-center justify-center text-white space-y-0.5">
-                <Globe className="w-8 h-8 text-sky-200 animate-pulse" />
-                <span className="text-[9px] font-mono font-extrabold text-sky-200 tracking-wider">ACM CORE</span>
+              {/* Central Core */}
+              <div className="w-28 sm:w-32 h-28 sm:h-32 rounded-full bg-gradient-to-br from-cyan-400/25 via-blue-600/20 to-indigo-950/40 border border-cyan-300/60 shadow-[0_0_50px_rgba(0,240,255,0.35)] flex flex-col items-center justify-center p-3 text-center backdrop-blur-sm z-10">
+                <Globe className="w-7 h-7 text-cyan-300 mb-1 animate-pulse" />
+                <span className="text-[10px] font-mono font-extrabold text-cyan-200 tracking-wider">ACM GLOBAL</span>
+                <span className="text-[9px] text-slate-300">CORE MATRIX</span>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 2. STATS COUNTERS CARDS */}
-      <section className="w-full">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-5">
-          <div className="bg-white border border-slate-200/90 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-all duration-200 flex items-center gap-3.5">
-            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-blue-50 text-[#005596] border border-blue-100 flex items-center justify-center font-bold flex-shrink-0 shadow-xs">
-              <Globe className="w-5 h-5 sm:w-6 sm:h-6" />
+      {/* =========================================================================
+          2. THE GLOBAL NETWORK (STATISTICS TRANSITION STRIP)
+         ========================================================================= */}
+      <section className="w-full space-y-3">
+        <div className="text-center space-y-1">
+          <span className="text-xs font-mono font-bold text-[#00AEEF] uppercase tracking-widest">THE GLOBAL NETWORK</span>
+          <h2 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight">One Community. Countless Possibilities.</h2>
+        </div>
+
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5 sm:gap-4 pt-1">
+          
+          <div className="bg-[#07152D] backdrop-blur-md border border-[#082B52] rounded-2xl p-4 shadow-lg flex items-center gap-3.5 hover:border-[#00AEEF]/40 transition-all">
+            <div className="w-11 h-11 rounded-xl bg-[#00AEEF]/10 text-[#16C7F3] border border-[#00AEEF]/20 flex items-center justify-center font-bold flex-shrink-0">
+              <Globe className="w-5 h-5" />
             </div>
-            <div className="min-w-0">
-              <div className="text-lg sm:text-2xl font-extrabold text-slate-900">1,000+</div>
-              <div className="text-xs text-slate-500 font-semibold">Chapters Worldwide</div>
+            <div>
+              <div className="text-xl font-extrabold text-white tracking-tight">1,000+</div>
+              <div className="text-[11px] text-slate-300 font-medium">Student Chapters</div>
             </div>
           </div>
 
-          <div className="bg-white border border-slate-200/90 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-all duration-200 flex items-center gap-3.5">
-            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-blue-50 text-[#005596] border border-blue-100 flex items-center justify-center font-bold flex-shrink-0 shadow-xs">
-              <Users className="w-5 h-5 sm:w-6 sm:h-6" />
+          <div className="bg-[#07152D] backdrop-blur-md border border-[#082B52] rounded-2xl p-4 shadow-lg flex items-center gap-3.5 hover:border-[#00AEEF]/40 transition-all">
+            <div className="w-11 h-11 rounded-xl bg-[#00AEEF]/10 text-[#16C7F3] border border-[#00AEEF]/20 flex items-center justify-center font-bold flex-shrink-0">
+              <Building className="w-5 h-5" />
             </div>
-            <div className="min-w-0">
-              <div className="text-sm sm:text-base font-extrabold text-slate-900 leading-tight">Student Chapters</div>
-              <div className="text-xs text-slate-500 font-semibold mt-0.5">Build local community</div>
-            </div>
-          </div>
-
-          <div className="bg-white border border-slate-200/90 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-all duration-200 flex items-center gap-3.5">
-            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-blue-50 text-[#005596] border border-blue-100 flex items-center justify-center font-bold flex-shrink-0 shadow-xs">
-              <Building className="w-5 h-5 sm:w-6 sm:h-6" />
-            </div>
-            <div className="min-w-0">
-              <div className="text-sm sm:text-base font-extrabold text-slate-900 leading-tight">Professional Chapters</div>
-              <div className="text-xs text-slate-500 font-semibold mt-0.5">Connect with experts</div>
+            <div>
+              <div className="text-xl font-extrabold text-white tracking-tight">100+</div>
+              <div className="text-[11px] text-slate-300 font-medium">Countries &amp; Regions</div>
             </div>
           </div>
 
-          <div className="bg-white border border-slate-200/90 rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-md transition-all duration-200 flex items-center gap-3.5">
-            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-blue-50 text-[#005596] border border-blue-100 flex items-center justify-center font-bold flex-shrink-0 shadow-xs">
-              <PlusCircle className="w-5 h-5 sm:w-6 sm:h-6" />
+          <div className="bg-[#07152D] backdrop-blur-md border border-[#082B52] rounded-2xl p-4 shadow-lg flex items-center gap-3.5 hover:border-[#00AEEF]/40 transition-all">
+            <div className="w-11 h-11 rounded-xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 flex items-center justify-center font-bold flex-shrink-0">
+              <Users className="w-5 h-5" />
             </div>
-            <div className="min-w-0">
-              <div className="text-sm sm:text-base font-extrabold text-slate-900 leading-tight">SIG Groups</div>
-              <div className="text-xs text-slate-500 font-semibold mt-0.5">Special interest topics</div>
+            <div>
+              <div className="text-xl font-extrabold text-white tracking-tight">50K+</div>
+              <div className="text-[11px] text-slate-300 font-medium">Student Members</div>
             </div>
           </div>
+
+          <div className="bg-[#07152D] backdrop-blur-md border border-[#082B52] rounded-2xl p-4 shadow-lg flex items-center gap-3.5 hover:border-[#00AEEF]/40 transition-all">
+            <div className="w-11 h-11 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center justify-center font-bold flex-shrink-0">
+              <PlusCircle className="w-5 h-5" />
+            </div>
+            <div>
+              <div className="text-xl font-extrabold text-white tracking-tight">4</div>
+              <div className="text-[11px] text-slate-300 font-medium">Global Communities</div>
+            </div>
+          </div>
+
         </div>
       </section>
 
-      {/* 3. FIND A CHAPTER SEARCH SECTION */}
-      <section id="find-chapter" className="w-full space-y-6">
-        <div className="bg-white border border-slate-200/90 rounded-2xl p-5 sm:p-6 shadow-sm space-y-4">
-          <div className="flex items-center justify-between">
-            <h3 className="text-xs sm:text-sm font-extrabold text-slate-500 uppercase tracking-wider">
-              Find a Chapter
-            </h3>
-            <span className="text-xs font-semibold text-[#005596]">{chapters.length} Chapters Active</span>
+      {/* =========================================================================
+          3. FIND A CHAPTER (PRODUCT SEARCH INTERFACE)
+         ========================================================================= */}
+      <section id="find-chapter" className="w-full space-y-5">
+        <div className="bg-[#07152D] backdrop-blur-xl border border-[#082B52] rounded-2xl p-5 sm:p-7 shadow-2xl space-y-4">
+          
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div>
+              <span className="text-[11px] font-mono font-bold text-[#00AEEF] uppercase tracking-widest">CHAPTER DIRECTORY</span>
+              <h2 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight mt-0.5">Find Your Chapter</h2>
+              <p className="text-xs sm:text-sm text-slate-300">Discover ACM communities near you and across the world.</p>
+            </div>
+            <span className="text-xs font-semibold text-emerald-300 bg-emerald-500/10 border border-emerald-500/30 px-3 py-1 rounded-full self-start sm:self-auto">
+              {chapters.length} Chapters Active
+            </span>
           </div>
 
-          <div className="flex flex-col md:flex-row items-stretch md:items-center gap-3">
+          <div className="flex flex-col md:flex-row items-stretch md:items-center gap-3 pt-1">
             <div className="flex-1 relative">
               <input
                 type="text"
-                placeholder="Search by institution, chapter code or location..."
-                className="w-full pl-10 pr-4 py-3 text-xs sm:text-sm border border-slate-200/90 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#005596] text-slate-800 placeholder-slate-400 font-medium bg-slate-50/50 focus:bg-white transition-all"
+                placeholder="Search institution, chapter code or location..."
+                className="w-full pl-10 pr-4 py-3 text-xs sm:text-sm border border-[#082B52] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00AEEF] text-white placeholder-slate-400 font-medium bg-[#050B1A] transition-all"
               />
               <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
             </div>
 
-            <select className="px-4 py-3 text-xs sm:text-sm border border-slate-200/90 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#005596] bg-slate-50/50 focus:bg-white font-semibold text-slate-700 cursor-pointer">
+            <select className="px-4 py-3 text-xs sm:text-sm border border-[#082B52] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00AEEF] bg-[#050B1A] font-semibold text-slate-200 cursor-pointer">
+              <option>All Countries</option>
+              <option>India</option>
+              <option>United States</option>
+              <option>Global</option>
+            </select>
+
+            <select className="px-4 py-3 text-xs sm:text-sm border border-[#082B52] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#00AEEF] bg-[#050B1A] font-semibold text-slate-200 cursor-pointer">
               <option>All Chapter Types</option>
               <option>Student Chapter</option>
               <option>Professional Chapter</option>
             </select>
 
-            <button className="px-6 py-3 bg-[#005596] hover:bg-[#003B6E] text-white text-xs sm:text-sm font-bold rounded-xl shadow-md transition-all active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer flex-shrink-0 min-h-[44px]">
-              <Search className="w-4 h-4" />
-              <span>Search Directory</span>
+            <button className="px-6 py-3 bg-[#00AEEF] hover:bg-[#0096ce] text-white text-xs sm:text-sm font-bold rounded-xl shadow-lg transition-all active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer flex-shrink-0 min-h-[44px]">
+              <Search className="w-4 h-4 text-white" />
+              <span>Search</span>
             </button>
           </div>
         </div>
 
-        {/* 4. CHAPTER CARDS GRID */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {chapters.map((ch) => (
-            <div
-              key={ch.id}
-              className="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-200 flex flex-col justify-between group h-full"
-            >
-              {/* Card Top Metadata & Body */}
-              <div className="space-y-4">
-                <div className="flex items-center justify-between text-xs font-bold">
-                  <span className="px-3 py-1 bg-blue-50 text-[#005596] rounded-lg border border-blue-100 font-mono text-xs font-extrabold">
-                    {ch.code}
-                  </span>
-                  <div className="flex items-center gap-1 text-slate-500 font-semibold">
-                    <MapPin className="w-3.5 h-3.5 text-slate-400" />
-                    <span>{ch.institution.country}</span>
+        {/* =========================================================================
+            4. FEATURED CHAPTERS DIRECTORY CARDS
+           ========================================================================= */}
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <h3 className="text-lg font-extrabold text-white tracking-tight">Featured Chapters</h3>
+            <span className="text-xs text-slate-300 font-medium">Explore active chapter hubs</span>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 items-stretch">
+            {chapters.map((ch) => (
+              <div
+                key={ch.id}
+                className="group relative bg-[#07152D]/90 backdrop-blur-md border border-[#082B52] hover:border-[#00AEEF]/50 rounded-2xl transition-all duration-200 hover:-translate-y-1 shadow-md hover:shadow-2xl flex flex-col justify-between overflow-hidden h-full"
+              >
+                <div className="p-5 space-y-3 flex-1">
+                  <div className="flex items-center justify-between text-xs font-bold">
+                    <span className="px-2.5 py-0.5 bg-[#00AEEF]/10 text-[#16C7F3] rounded-lg border border-[#00AEEF]/20 font-mono text-xs font-extrabold">
+                      {ch.code}
+                    </span>
+                    <div className="flex items-center gap-1 text-slate-300 font-medium text-[11px]">
+                      <MapPin className="w-3.5 h-3.5 text-slate-400" />
+                      <span>{ch.institution?.country || 'Global'}</span>
+                    </div>
+                  </div>
+
+                  <div className="space-y-1">
+                    <h3 className="text-base font-extrabold text-white leading-snug group-hover:text-[#00AEEF] transition-colors line-clamp-1">
+                      {ch.name}
+                    </h3>
+                    <p className="text-xs text-slate-300 line-clamp-3 leading-relaxed font-normal h-12">
+                      {ch.description}
+                    </p>
                   </div>
                 </div>
 
-                <div>
-                  <h3 className="text-lg font-extrabold text-slate-900 leading-snug group-hover:text-[#005596] transition-colors">
-                    {ch.name}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-slate-600 line-clamp-3 leading-relaxed mt-2 font-normal">
-                    {ch.description}
-                  </p>
+                <div className="p-5 pt-0 space-y-3">
+                  <div className="flex items-center justify-between text-xs text-slate-300 font-medium pt-3 border-t border-[#082B52]">
+                    <span className="inline-flex items-center gap-1">
+                      <Users className="w-3.5 h-3.5 text-slate-400" />
+                      <strong className="text-white">{ch._count?.memberships || 0}</strong> Members
+                    </span>
+                    <span className="inline-flex items-center gap-1">
+                      <Sparkles className="w-3.5 h-3.5 text-slate-400" />
+                      <strong className="text-white">{ch._count?.events || 0}</strong> Events
+                    </span>
+                  </div>
+
+                  <Link
+                    href={`/chapters/${ch.code}`}
+                    className="w-full py-3 px-4 bg-[#050B1A]/90 group-hover:bg-[#082B52] text-[#00AEEF] group-hover:text-white border border-[#082B52] rounded-xl font-extrabold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all duration-200 shadow-xs cursor-pointer active:scale-[0.98] select-none text-center min-h-[44px]"
+                  >
+                    <span>View Chapter</span>
+                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  </Link>
                 </div>
               </div>
-
-              {/* Card Bottom Stats & Full-Width Action Button */}
-              <div className="mt-6 pt-4 border-t border-slate-100 space-y-4">
-                <div className="flex items-center justify-between text-xs text-slate-500 font-medium">
-                  <span className="inline-flex items-center gap-1">
-                    <Users className="w-3.5 h-3.5 text-slate-400" />
-                    <strong className="text-slate-900">{ch._count.memberships}</strong> Members
-                  </span>
-                  <span className="inline-flex items-center gap-1">
-                    <Sparkles className="w-3.5 h-3.5 text-slate-400" />
-                    <strong className="text-slate-900">{ch._count.events}</strong> Events
-                  </span>
-                </div>
-
-                {/* FULL-WIDTH RECTANGULAR VIEW CHAPTER TOUCH BUTTON */}
-                <Link
-                  href={`/chapters/${ch.code}`}
-                  className="w-full py-3 px-4 bg-blue-50 hover:bg-[#005596] text-[#005596] hover:text-white border border-blue-100/90 hover:border-[#005596] rounded-xl font-extrabold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all duration-200 shadow-xs cursor-pointer active:scale-[0.98] select-none text-center group/btn min-h-[44px]"
-                >
-                  <span>View Chapter</span>
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-1" />
-                </Link>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
+
+      {/* =========================================================================
+          5. GROW WITH ACM (EDITORIAL ASYMMETRIC LAYOUT)
+         ========================================================================= */}
+      <section className="w-full space-y-5">
+        <div className="space-y-1">
+          <span className="text-xs font-mono font-bold text-[#00AEEF] uppercase tracking-widest">GROW WITH ACM</span>
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">More Than a Chapter.</h2>
+          <p className="text-xs sm:text-sm text-slate-300 max-w-xl">Empowering student developers, researchers, and tech leaders worldwide.</p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+          <div className="lg:col-span-5 bg-gradient-to-br from-[#050B1A] via-[#07152D] to-[#082B52] border border-[#082B52] rounded-2xl p-6 sm:p-7 flex flex-col justify-between space-y-5 shadow-xl relative overflow-hidden">
+            <div className="space-y-3 relative z-10">
+              <div className="w-11 h-11 rounded-xl bg-purple-500/10 text-purple-400 border border-purple-500/20 flex items-center justify-center">
+                <Trophy className="w-5 h-5" />
+              </div>
+              <span className="text-[11px] font-mono font-bold text-purple-300 uppercase tracking-widest">FLAGSHIP TRACK</span>
+              <h3 className="text-xl font-extrabold text-white leading-tight">Technical Events &amp; Hackathons</h3>
+              <p className="text-xs text-slate-300 leading-relaxed">
+                Compete in multi-college coding arenas, build production-grade projects, and get recognized by top tech employers.
+              </p>
+            </div>
+
+            <div className="pt-3 border-t border-[#082B52] flex items-center justify-between text-xs font-bold text-purple-300 relative z-10">
+              <span>EXPLORE CONTESTS</span>
+              <ArrowRight className="w-4 h-4" />
+            </div>
+          </div>
+
+          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            
+            <div className="p-5 bg-[#07152D] border border-[#082B52] rounded-2xl space-y-2.5 flex flex-col justify-between">
+              <div className="space-y-2.5">
+                <div className="w-9 h-9 rounded-xl bg-blue-500/10 text-[#00AEEF] flex items-center justify-center border border-blue-500/20">
+                  <Zap className="w-4 h-4" />
+                </div>
+                <h3 className="font-extrabold text-sm text-white">Workshops</h3>
+                <p className="text-xs text-slate-300 leading-relaxed">GenAI, Cloud &amp; DevOps masterclasses.</p>
+              </div>
+              <div className="pt-1 text-xs font-bold text-[#00AEEF] flex items-center gap-1">
+                <span>LEARN MORE</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </div>
+            </div>
+
+            <div className="p-5 bg-[#07152D] border border-[#082B52] rounded-2xl space-y-2.5 flex flex-col justify-between">
+              <div className="space-y-2.5">
+                <div className="w-9 h-9 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center border border-emerald-500/20">
+                  <BookOpen className="w-4 h-4" />
+                </div>
+                <h3 className="font-extrabold text-sm text-white">Research</h3>
+                <p className="text-xs text-slate-300 leading-relaxed">ACM Digital Library &amp; paper archives.</p>
+              </div>
+              <div className="pt-1 text-xs font-bold text-emerald-400 flex items-center gap-1">
+                <span>EXPLORE PAPERS</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </div>
+            </div>
+
+            <div className="p-5 bg-[#07152D] border border-[#082B52] rounded-2xl space-y-2.5 flex flex-col justify-between">
+              <div className="space-y-2.5">
+                <div className="w-9 h-9 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center border border-amber-500/20">
+                  <Award className="w-4 h-4" />
+                </div>
+                <h3 className="font-extrabold text-sm text-white">Leadership</h3>
+                <p className="text-xs text-slate-300 leading-relaxed">Chapter officer roles &amp; management.</p>
+              </div>
+              <div className="pt-1 text-xs font-bold text-amber-400 flex items-center gap-1">
+                <span>BECOME OFFICER</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </div>
+            </div>
+
+            <div className="p-5 bg-[#07152D] border border-[#082B52] rounded-2xl space-y-2.5 flex flex-col justify-between">
+              <div className="space-y-2.5">
+                <div className="w-9 h-9 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center border border-indigo-500/20">
+                  <Briefcase className="w-4 h-4" />
+                </div>
+                <h3 className="font-extrabold text-sm text-white">Career Opportunities</h3>
+                <p className="text-xs text-slate-300 leading-relaxed">Alumni network &amp; internships.</p>
+              </div>
+              <div className="pt-1 text-xs font-bold text-indigo-400 flex items-center gap-1">
+                <span>CONNECT ALUMNI</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          6. FINAL CALL TO ACTION ("BUILD THE NEXT CHAPTER.")
+         ========================================================================= */}
+      <section id="start-chapter" className="w-full">
+        <div className="bg-gradient-to-r from-[#050B1A] via-[#07152D] to-[#082B52] text-white rounded-2xl sm:rounded-3xl p-6 sm:p-10 text-center space-y-5 shadow-2xl relative overflow-hidden border border-[#082B52]">
+          <div className="max-w-2xl mx-auto space-y-2.5 relative z-10">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white leading-tight">
+              Build the Next Chapter.
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+              Bring ACM to your campus and create a community where students learn, collaborate and lead.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-3 pt-1 relative z-10">
+            <a
+              href="https://www.acm.org/chapters/start-a-chapter"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-6 py-3 bg-[#00AEEF] hover:bg-[#0096ce] text-white font-extrabold text-xs sm:text-sm rounded-xl shadow-lg transition-all min-h-[44px] flex items-center justify-center gap-2"
+            >
+              <Sparkles className="w-4 h-4 text-white" />
+              <span>Start a Chapter</span>
+            </a>
+            <a
+              href="#find-chapter"
+              className="px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-bold text-xs sm:text-sm rounded-xl border border-white/20 backdrop-blur-md transition-all min-h-[44px] flex items-center justify-center gap-2"
+            >
+              <Globe className="w-4 h-4 text-[#16C7F3]" />
+              <span>Explore the Network</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 }
